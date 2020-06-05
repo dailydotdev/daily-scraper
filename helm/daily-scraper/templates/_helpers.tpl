@@ -56,3 +56,4 @@ checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . |
     configMapKeyRef:
       name: {{ $fullName }}
       key: API_URL
+{{- end }}
