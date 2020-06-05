@@ -1,0 +1,125 @@
+version: 2.1
+orbs:
+  gcp-gcr: circleci/gcp-gcr@0.6.0
+  helm: circleci/helm@0.1.2
+  gcp-cli: circleci/gcp-cli@1.8.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14.3.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Test
+          command: npm run test -- --ci --reporters=default --reporters=jest-junit
+          environment:
+            - JEST_JUNIT_OUTPUT_DIR: ./test-results
+      - store_test_results:
+          path: ./test-results
+      - run:
+          name: Build
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  build_and_push_docker:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - gcp-gcr/build-image:
+          image: $CIRCLE_PROJECT_REPONAME
+          tag: $CIRCLE_SHA1
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/push-image:
+          image: $CIRCLE_PROJECT_REPONAME
+          tag: $CIRCLE_SHA1
+  secrets:
+    docker:
+      - image: ubuntu:20.04
+    steps:
+      - checkout
+      - run:
+          name: Install git-crypt
+          command: apt-get update -y && apt-get install -y git-crypt
+      - run:
+          name: Import GPG key
+          command: echo $GPG_KEY | base64 -d > key.gpg && gpg --pinentry-mode loopback --passphrase $GPG_PASSPHRASE --allow-secret-key-import --import key.gpg && rm key.gpg
+      - run:
+          name: Trust ultimately key
+          command: echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key $GPG_FINGERPRINT trust;
+      - run:
+          name: Decrypt manually git-crypt key
+          command: gpg --pinentry-mode loopback --passphrase $GPG_PASSPHRASE --decrypt ./.git-crypt/keys/default/0/$GPG_FINGERPRINT.gpg > ./.git-crypt/keys/default/0/decrypted.gpg
+      - run:
+          name: Unlock the secrets
+          command: git-crypt unlock .git-crypt/keys/default/0/decrypted.gpg
+      - persist_to_workspace:
+          root: .
+          paths:
+            - helm/values
+  deploy_helm:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - gcp-cli/initialize
+      - run:
+          name: Get cluster credentials
+          command: gcloud container clusters get-credentials prod
+      - helm/install-helm-client:
+          version: v2.9.1
+      - run:
+          name: Update Helm release
+          command: helm upgrade $CIRCLE_PROJECT_REPONAME ./helm/$CIRCLE_PROJECT_REPONAME --namespace daily -f ./helm/values/prod.yaml --set-string image.tag=$CIRCLE_SHA1 -i
+workflows:
+  build:
+    jobs:
+      - build
+      - build_and_push_docker:
+          requires:
+            - build
+          context: GCR
+          filters:
+            branches:
+              ignore: /pull\/[0-9]+/
+      - secrets:
+          context: GPG
+          filters:
+            branches:
+              only:
+                - master
+      - deploy_helm:
+          requires:
+            - secrets
+            - build_and_push_docker
+          context: PROD
+          filters:
+            branches:
+              only:
+                - master
+      - gcp-gcr/add-image-tag:
+          requires:
+            - build_and_push_docker
+          context: GCR
+          image: $CIRCLE_PROJECT_REPONAME
+          source-tag: $CIRCLE_SHA1
+          target-tag: latest
+          filters:
+            branches:
+              only:
+                - master

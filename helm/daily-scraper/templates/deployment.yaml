@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "daily-scraper.fullname" . }}
+  labels:
+    app: {{ template "daily-scraper.name" . }}
+    chart: {{ template "daily-scraper.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "daily-scraper.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+{{- include "daily-scraper.checksum" . | indent 8 }}
+      labels:
+        app: {{ template "daily-scraper.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          env:
+          - name: PORT
+            value: "3000"
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: "/etc/config/serviceAccount.json"
+{{ include "daily-scraper.config" . | indent 10 }}
+          volumeMounts:
+          - name: config
+            mountPath: "/etc/config"
+            readOnly: true
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+      - name: config
+        secret:
+          secretName: {{ template "daily-scraper.fullname" . }}-files
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
