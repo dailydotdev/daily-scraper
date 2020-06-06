@@ -7,4 +7,5 @@ module.exports = {
     '<rootDir>/__tests__/fixture/',
     '<rootDir>/__tests__/helpers.ts',
   ],
+  testTimeout: 20000,
 };

@@ -88,6 +88,12 @@ export default function app(): FastifyInstance {
   app.register(trace, { enabled: isProd });
   app.register(auth, { secret: process.env.ACCESS_SECRET });
 
+  app.addHook('onClose', async (instance, done) => {
+    await pptrPool.drain();
+    await pptrPool.clear();
+    done();
+  });
+
   app.get('/health', (req, res) => {
     res.type('application/health+json');
     res.send(stringifyHealthCheck({ status: 'ok' }));
