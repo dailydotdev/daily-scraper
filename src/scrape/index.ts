@@ -2,23 +2,17 @@ import * as puppeteer from 'puppeteer';
 
 type Scraper<T> = (page: puppeteer.Page, res: puppeteer.Response) => Promise<T>;
 
-export async function scrape<T>(url: string, scraper: Scraper<T>): Promise<T> {
-  const browser = await puppeteer.launch({
-    args: ['--disable-dev-shm-usage'],
-  });
+export async function scrape<T>(
+  url: string,
+  browser: puppeteer.Browser,
+  scraper: Scraper<T>,
+): Promise<T> {
   const page = await browser.newPage();
   const res = await page.goto(url, {
     waitUntil: 'load',
-    timeout: 10000,
+    timeout: 20000,
   });
-  try {
-    const data = await scraper(page, res);
-    await browser.close();
-    return data;
-  } catch (err) {
-    await browser.close();
-    throw err;
-  }
+  return scraper(page, res);
 }
 
 export * from './icon';

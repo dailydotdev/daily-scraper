@@ -14,15 +14,13 @@ export interface RSSFeed {
 }
 
 export const scrapeRssLink = async (page: puppeteer.Page): Promise<RSS[]> => {
-  const rss = await page.$$eval(
-    'link[rel="alternate"][type="application/rss+xml"]',
-    (el) =>
-      el.map(
-        (x): RSS => ({
-          url: x.getAttribute('href'),
-          title: x.getAttribute('title'),
-        }),
-      ),
+  const rss = await page.$$eval('link[rel="alternate"][type*="xml"]', (el) =>
+    el.map(
+      (x): RSS => ({
+        url: x.getAttribute('href'),
+        title: x.getAttribute('title'),
+      }),
+    ),
   );
   return rss.map((x) => ({ ...x, url: url.resolve(page.url(), x.url) }));
 };
@@ -31,7 +29,8 @@ export const readRssFeed = async (
   page: puppeteer.Page,
   res: puppeteer.Response,
 ): Promise<RSSFeed> => {
-  if (res.headers()['content-type'].indexOf('application/rss+xml') > -1) {
+  const contentType = res.headers()['content-type'];
+  if (contentType.indexOf('xml') > -1) {
     const feed = await res.text();
     const parser = new FeedParser({ normalize: true, addmeta: true });
 

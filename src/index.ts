@@ -6,6 +6,7 @@ import * as rateLimit from 'fastify-rate-limit';
 import * as caching from 'fastify-caching';
 import * as abstractCache from 'abstract-cache';
 import * as puppeteer from 'puppeteer';
+import * as genericPool from 'generic-pool';
 
 import './config';
 import trace from './trace';
@@ -63,6 +64,17 @@ const scrapeSource = async (
   };
 };
 
+const pptrPool = genericPool.createPool(
+  {
+    create: () =>
+      puppeteer.launch({
+        args: ['--disable-dev-shm-usage'],
+      }),
+    destroy: (client) => client.close(),
+  },
+  { min: 1, max: 5 },
+);
+
 export default function app(): FastifyInstance {
   const isProd = process.env.NODE_ENV === 'production';
 
@@ -101,9 +113,11 @@ export default function app(): FastifyInstance {
     if (!url || !url.length) {
       return res.status(400).send();
     }
+    const browser = await pptrPool.acquire();
     try {
       let data = await scrape(
         url,
+        browser,
         async (page, res): Promise<ScrapeSourceWebsite | ScrapeSourceRSS> => {
           if (res.status() >= 400) {
             throw new Error('unexpected response');
@@ -121,7 +135,11 @@ export default function app(): FastifyInstance {
       if (data.type === 'rss') {
         const url = data.rss;
         try {
-          data = await scrape(data.website, scrapeSource);
+          data = await scrape(
+            data.website?.split('?')?.[0],
+            browser,
+            scrapeSource,
+          );
         } catch (err) {
           data = { type: 'website', rss: [] };
         }
@@ -132,6 +150,7 @@ export default function app(): FastifyInstance {
       req.log.warn({ err, url }, 'failed to scrape');
       res.status(200).send({ type: 'unavailable' });
     }
+    await pptrPool.release(browser);
   });
 
   return app;
