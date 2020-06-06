@@ -29,6 +29,10 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
           readinessProbe:
             httpGet:
               path: /health

@@ -3,7 +3,9 @@ import * as puppeteer from 'puppeteer';
 type Scraper<T> = (page: puppeteer.Page, res: puppeteer.Response) => Promise<T>;
 
 export async function scrape<T>(url: string, scraper: Scraper<T>): Promise<T> {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ['--disable-dev-shm-usage'],
+  });
   const page = await browser.newPage();
   const res = await page.goto(url, {
     waitUntil: 'load',
