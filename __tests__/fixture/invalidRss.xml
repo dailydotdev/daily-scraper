@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Daily</title>
+    <author>Daily</author>
+    <description>Daily is a dev news curator delivering relevant updates to your new tab. It gathers and ranks articles from tens of different sources to help you optimize your time and boost your knowledge.
+
+Made by developers for developers ❤️</description>
+    <link>https://dev.to/dailydotdev</link>
+    <language>en</language>
+    <item>
+
+&lt;p&gt;So, let's get it started.&lt;/p&gt;
+
+&lt;h2&gt;
+  &lt;a href="#whats-hot-in-web-development-weekly-picks-129" class="anchor"&gt;
+  &lt;/a&gt;
+  1️⃣ 🔥 What's Hot in Web Development? — Weekly Picks #129
+&lt;/h2&gt;
+
+&lt;p&gt;Hey look ma, I made it! It's a great pleasure to feature our last issue of weekly picks this week. &lt;strong&gt;Last week was all about frontend and cybersecurity, lots of awesome content&lt;/strong&gt;. 🏆&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/457b6d9ca438a3e5bbb2d64650bee06c"&gt;🔥 What's Hot in Web Development? — Weekly Picks #129&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#creating-a-design-system-in-react" class="anchor"&gt;
+  &lt;/a&gt;
+  2️⃣ Creating a Design System in React
+&lt;/h2&gt;
+
+&lt;p&gt;This post has been sitting in my bookmarks for a few days already and now it's a good excuse to read it. The author walks you through building your own design system using React and Bit. &lt;strong&gt;It covers building isolated components, distributing, documenting and collaborating with others.&lt;/strong&gt; 🏗&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/89405bbaa2a1f905acf8d1694e646a04"&gt;Creating a Design System in React&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#10-coding-principles-every-programmer-should-learn" class="anchor"&gt;
+  &lt;/a&gt;
+  3️⃣ 10 Coding Principles Every Programmer Should Learn
+&lt;/h2&gt;
+
+&lt;p&gt;🤖 If you are into Object Oriented Programming (OOP), this one is for you. &lt;strong&gt;Don’t repeat yourself, Encapsulate What Changes, Open Closed Design Principle, Single Responsibility Principle, Dependency Injection or Inversion Principle, Favor Composition over Inheritance, Liskov Substitution Principle, Interface Segregation Principle, Programming for Interface not implementation, and Delegation Principles are all covered&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/5266d7903466cb1f70c1eee852bbec11"&gt;10 Coding Principles Every Programmer Should Learn&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#randmeme-memeasaservice" class="anchor"&gt;
+  &lt;/a&gt;
+  4️⃣ rand(meme) — Meme-as-a-Service
+&lt;/h2&gt;
+
+&lt;p&gt;A great product that might trap you into a rabbit hole with an awesome cartoon-like design. &lt;strong&gt;rand(meme) will share with you a random meme for you to use as a placeholder wherever you want&lt;/strong&gt;. 🤪&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/63ccd84d2c8e2be5fa97d423b474fec0"&gt;rand(meme) — Meme-as-a-Service&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#5-things-i-wish-i-knew-when-learning-to-code" class="anchor"&gt;
+  &lt;/a&gt;
+  5️⃣ 5 Things I Wish I Knew When Learning to Code
+&lt;/h2&gt;
+
+&lt;p&gt;💪 A powerful motivation post for those who look to start their journey as a software engineer. &lt;strong&gt;This post addresses your inner concerns about coding&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/109fdad98c94a46b84cdbeaa8d32ec72"&gt;5 Things I Wish I Knew When Learning to Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#create-simple-cpu-monitor-app-installer-with-electron" class="anchor"&gt;
+  &lt;/a&gt;
+  6️⃣ Create Simple CPU Monitor App + Installer with Electron
+&lt;/h2&gt;
+
+&lt;p&gt;Yay, It's build time! 👷‍♀️. &lt;strong&gt;A complete walkthrough of building an Electron desktop app with an installer&lt;/strong&gt;. You even need to get your hands dirty with low level &lt;code&gt;os-utils&lt;/code&gt; node module. Give it a shot if you have never tried Electron before. Installers are so retro!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/ab846c224e623ed028267ed780c00d31"&gt;Create Simple CPU Monitor App + Installer with Electron&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#fiber-web-framework" class="anchor"&gt;
+  &lt;/a&gt;
+  7️⃣ Fiber web framework
+&lt;/h2&gt;
+
+&lt;p&gt;⚡️ &lt;strong&gt;Fiber is an Express inspired web framework for Golang&lt;/strong&gt;. The author shares performance benchmarks of Fiber vs Express.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/1a67b0310dbffe78aca657ed7e25f365"&gt;Fiber web framework&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#tools-to-measure-core-web-vitals" class="anchor"&gt;
+  &lt;/a&gt;
+  8️⃣ Tools to measure Core Web Vitals
+&lt;/h2&gt;
+
+&lt;p&gt;web.dev is one of my beloved blogs, every post is just pure gold 🏅. Previously the team announced Web Vitals that is basically a set of metrics to measure your app performance. &lt;strong&gt;Now they are sharing the news that all Google popular tools support the new metrics&lt;/strong&gt;. PageSpeed Insights, Chrome DevTools, Lighthouse, and even Google Search.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/a5935a2a489b038d0727654cd0cd05c0"&gt;Tools to measure Core Web Vitals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#complete-guide%E2%80%8A%E2%80%8Agetting-a-software-engineering-internship-at-google-amazon%C2%A0" class="anchor"&gt;
+  &lt;/a&gt;
+  9️⃣ Complete Guide — Getting a Software Engineering internship at Google, Amazon, …
+&lt;/h2&gt;
+
+&lt;p&gt;🆙 &lt;strong&gt;The author shares his experience and general guidance of how to score a job in the tech giants&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/fd3d21339f35eee51e766d0dec48bf28"&gt;Complete Guide — Getting a Software Engineering internship at Google, Amazon, …&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#a-guide-for-naming-things-in-programming" class="anchor"&gt;
+  &lt;/a&gt;
+  🔟 A Guide for Naming Things in Programming
+&lt;/h2&gt;
+
+&lt;p&gt;🤔 I believe naming is one of the hardest problems in coding, it's always nice to get fresh ideas in this regards. &lt;strong&gt;8 rules to help you choosing the right name for your variables, functions, classes and whatnot&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/e65c880bdb7f29d16992c279e38253e3"&gt;A Guide for Naming Things in Programming&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#wrap-up" class="anchor"&gt;
+  &lt;/a&gt;
+  🙌 Wrap Up!
+&lt;/h2&gt;
+
+&lt;p&gt;That was all for this week. We will come back with another list of interesting development posts next week.&lt;/p&gt;
+
+&lt;p&gt;It's also a great chance to share that we are about to launch our new premium program with lots of cool perks.&lt;br&gt;
+&lt;strong&gt;Make sure to subscribe &lt;a href="https://r.daily.dev/premium"&gt;here&lt;/a&gt; to get an early bird discount.&lt;/strong&gt;&lt;/p&gt;
+
+
+
+
+
+&lt;center&gt; 👋 Follow us on &lt;a href="https://r.daily.dev/twitter"&gt;Twitter&lt;/a&gt; to stay up-to-date! &lt;/center&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;a href="https://r.daily.dev/web"&gt;Thanks to Daily&lt;/a&gt;, developers can focus on code instead of searching for news. Get immediate access to all these posts and much more just by opening a new tab.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://r.daily.dev/web"&gt;&lt;img src="https://res.cloudinary.com/practicaldev/image/fetch/s--dBpfnoTv--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/od2407i0eogvtdm0ddhk.jpeg" alt="Daily Poster"&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+      <category>react</category>
+      <category>node</category>
+      <category>codenewbie</category>
+      <category>career</category>
+    </item>
+  </channel>
+</rss>

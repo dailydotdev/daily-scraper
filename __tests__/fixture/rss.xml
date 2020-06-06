@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Daily</title>
+    <author>Daily</author>
+    <description>Daily is a dev news curator delivering relevant updates to your new tab. It gathers and ranks articles from tens of different sources to help you optimize your time and boost your knowledge.
+
+Made by developers for developers ❤️</description>
+    <link>http://localhost:6789/</link>
+    <language>en</language>
+    <item>
+      <title>🔥 What's Popular Among Developers? — Weekly Picks #130</title>
+      <author>Ido Shamun</author>
+      <pubDate>Wed, 03 Jun 2020 14:45:23 +0000</pubDate>
+      <link>https://dev.to/dailydotdev/what-s-popular-among-developers-weekly-picks-130-3p5p</link>
+      <guid>https://dev.to/dailydotdev/what-s-popular-among-developers-weekly-picks-130-3p5p</guid>
+      <description>&lt;p&gt;🌟 This week we have incredible posts! Most of them will equip you with best practices and motivation. Shout out to all the authors. 🙌&lt;/p&gt;
+
+&lt;p&gt;So, let's get it started.&lt;/p&gt;
+
+&lt;h2&gt;
+  &lt;a href="#whats-hot-in-web-development-weekly-picks-129" class="anchor"&gt;
+  &lt;/a&gt;
+  1️⃣ 🔥 What's Hot in Web Development? — Weekly Picks #129
+&lt;/h2&gt;
+
+&lt;p&gt;Hey look ma, I made it! It's a great pleasure to feature our last issue of weekly picks this week. &lt;strong&gt;Last week was all about frontend and cybersecurity, lots of awesome content&lt;/strong&gt;. 🏆&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/457b6d9ca438a3e5bbb2d64650bee06c"&gt;🔥 What's Hot in Web Development? — Weekly Picks #129&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#creating-a-design-system-in-react" class="anchor"&gt;
+  &lt;/a&gt;
+  2️⃣ Creating a Design System in React
+&lt;/h2&gt;
+
+&lt;p&gt;This post has been sitting in my bookmarks for a few days already and now it's a good excuse to read it. The author walks you through building your own design system using React and Bit. &lt;strong&gt;It covers building isolated components, distributing, documenting and collaborating with others.&lt;/strong&gt; 🏗&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/89405bbaa2a1f905acf8d1694e646a04"&gt;Creating a Design System in React&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#10-coding-principles-every-programmer-should-learn" class="anchor"&gt;
+  &lt;/a&gt;
+  3️⃣ 10 Coding Principles Every Programmer Should Learn
+&lt;/h2&gt;
+
+&lt;p&gt;🤖 If you are into Object Oriented Programming (OOP), this one is for you. &lt;strong&gt;Don’t repeat yourself, Encapsulate What Changes, Open Closed Design Principle, Single Responsibility Principle, Dependency Injection or Inversion Principle, Favor Composition over Inheritance, Liskov Substitution Principle, Interface Segregation Principle, Programming for Interface not implementation, and Delegation Principles are all covered&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/5266d7903466cb1f70c1eee852bbec11"&gt;10 Coding Principles Every Programmer Should Learn&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#randmeme-memeasaservice" class="anchor"&gt;
+  &lt;/a&gt;
+  4️⃣ rand(meme) — Meme-as-a-Service
+&lt;/h2&gt;
+
+&lt;p&gt;A great product that might trap you into a rabbit hole with an awesome cartoon-like design. &lt;strong&gt;rand(meme) will share with you a random meme for you to use as a placeholder wherever you want&lt;/strong&gt;. 🤪&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/63ccd84d2c8e2be5fa97d423b474fec0"&gt;rand(meme) — Meme-as-a-Service&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#5-things-i-wish-i-knew-when-learning-to-code" class="anchor"&gt;
+  &lt;/a&gt;
+  5️⃣ 5 Things I Wish I Knew When Learning to Code
+&lt;/h2&gt;
+
+&lt;p&gt;💪 A powerful motivation post for those who look to start their journey as a software engineer. &lt;strong&gt;This post addresses your inner concerns about coding&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/109fdad98c94a46b84cdbeaa8d32ec72"&gt;5 Things I Wish I Knew When Learning to Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#create-simple-cpu-monitor-app-installer-with-electron" class="anchor"&gt;
+  &lt;/a&gt;
+  6️⃣ Create Simple CPU Monitor App + Installer with Electron
+&lt;/h2&gt;
+
+&lt;p&gt;Yay, It's build time! 👷‍♀️. &lt;strong&gt;A complete walkthrough of building an Electron desktop app with an installer&lt;/strong&gt;. You even need to get your hands dirty with low level &lt;code&gt;os-utils&lt;/code&gt; node module. Give it a shot if you have never tried Electron before. Installers are so retro!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/ab846c224e623ed028267ed780c00d31"&gt;Create Simple CPU Monitor App + Installer with Electron&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#fiber-web-framework" class="anchor"&gt;
+  &lt;/a&gt;
+  7️⃣ Fiber web framework
+&lt;/h2&gt;
+
+&lt;p&gt;⚡️ &lt;strong&gt;Fiber is an Express inspired web framework for Golang&lt;/strong&gt;. The author shares performance benchmarks of Fiber vs Express.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/1a67b0310dbffe78aca657ed7e25f365"&gt;Fiber web framework&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#tools-to-measure-core-web-vitals" class="anchor"&gt;
+  &lt;/a&gt;
+  8️⃣ Tools to measure Core Web Vitals
+&lt;/h2&gt;
+
+&lt;p&gt;web.dev is one of my beloved blogs, every post is just pure gold 🏅. Previously the team announced Web Vitals that is basically a set of metrics to measure your app performance. &lt;strong&gt;Now they are sharing the news that all Google popular tools support the new metrics&lt;/strong&gt;. PageSpeed Insights, Chrome DevTools, Lighthouse, and even Google Search.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/a5935a2a489b038d0727654cd0cd05c0"&gt;Tools to measure Core Web Vitals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#complete-guide%E2%80%8A%E2%80%8Agetting-a-software-engineering-internship-at-google-amazon%C2%A0" class="anchor"&gt;
+  &lt;/a&gt;
+  9️⃣ Complete Guide — Getting a Software Engineering internship at Google, Amazon, …
+&lt;/h2&gt;
+
+&lt;p&gt;🆙 &lt;strong&gt;The author shares his experience and general guidance of how to score a job in the tech giants&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/fd3d21339f35eee51e766d0dec48bf28"&gt;Complete Guide — Getting a Software Engineering internship at Google, Amazon, …&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#a-guide-for-naming-things-in-programming" class="anchor"&gt;
+  &lt;/a&gt;
+  🔟 A Guide for Naming Things in Programming
+&lt;/h2&gt;
+
+&lt;p&gt;🤔 I believe naming is one of the hardest problems in coding, it's always nice to get fresh ideas in this regards. &lt;strong&gt;8 rules to help you choosing the right name for your variables, functions, classes and whatnot&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/e65c880bdb7f29d16992c279e38253e3"&gt;A Guide for Naming Things in Programming&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#wrap-up" class="anchor"&gt;
+  &lt;/a&gt;
+  🙌 Wrap Up!
+&lt;/h2&gt;
+
+&lt;p&gt;That was all for this week. We will come back with another list of interesting development posts next week.&lt;/p&gt;
+
+&lt;p&gt;It's also a great chance to share that we are about to launch our new premium program with lots of cool perks.&lt;br&gt;
+&lt;strong&gt;Make sure to subscribe &lt;a href="https://r.daily.dev/premium"&gt;here&lt;/a&gt; to get an early bird discount.&lt;/strong&gt;&lt;/p&gt;
+
+
+
+
+
+&lt;center&gt; 👋 Follow us on &lt;a href="https://r.daily.dev/twitter"&gt;Twitter&lt;/a&gt; to stay up-to-date! &lt;/center&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;a href="https://r.daily.dev/web"&gt;Thanks to Daily&lt;/a&gt;, developers can focus on code instead of searching for news. Get immediate access to all these posts and much more just by opening a new tab.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://r.daily.dev/web"&gt;&lt;img src="https://res.cloudinary.com/practicaldev/image/fetch/s--dBpfnoTv--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/od2407i0eogvtdm0ddhk.jpeg" alt="Daily Poster"&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+      <category>react</category>
+      <category>node</category>
+      <category>codenewbie</category>
+      <category>career</category>
+    </item>
+    <item>
+      <title>🔥 What's Hot in Web Development? — Weekly Picks #129</title>
+      <author>Ido Shamun</author>
+      <pubDate>Wed, 27 May 2020 13:12:36 +0000</pubDate>
+      <link>https://dev.to/dailydotdev/what-s-hot-in-web-development-weekly-picks-129-2odp</link>
+      <guid>https://dev.to/dailydotdev/what-s-hot-in-web-development-weekly-picks-129-2odp</guid>
+      <description>&lt;p&gt;🌟 This week we have great frontend content and even one cybersecurity post! This is a great chance to thank all the excellent writers, you are rocking it. 🙌&lt;/p&gt;
+
+&lt;p&gt;So, let's get it started.&lt;/p&gt;
+
+&lt;h2&gt;
+  &lt;a href="#introduction-to-treat" class="anchor"&gt;
+  &lt;/a&gt;
+  1️⃣ Introduction to treat
+&lt;/h2&gt;
+
+&lt;p&gt;CSS in JS is a well-known design pattern, usually, it causes styling to be executed in runtime and increase the bundle size. &lt;strong&gt;Treat is a CSS in JS that executes everything in build time&lt;/strong&gt;. Pretty cool if you ask me. There is one caveat though, you must use webpack. 👩‍🎤&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/4637a5c1f58c611648a9b23a051a07f8"&gt;Introduction to treat&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#learn-javascript-by-creating-a-tetris-game" class="anchor"&gt;
+  &lt;/a&gt;
+  2️⃣ Learn JavaScript by creating a Tetris game
+&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Building real-world projects is one of the best ways to learn to code.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;🕹 &lt;strong&gt;A video course (1.5 hours) for those who have zero experience in coding and would like to get right into it&lt;/strong&gt;. At the end of the course, you will have your own Tetris game, how awesome is that!?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/e3e572fc7dd1bdb64c71681357c8430b"&gt;Learn JavaScript by creating a Tetris game&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#react-vs-the-competition" class="anchor"&gt;
+  &lt;/a&gt;
+  3️⃣ React vs the Competition
+&lt;/h2&gt;
+
+&lt;p&gt;⚛️ React is probably the most popular frontend library, but have you ever stopped to think why and what's so special about it? &lt;strong&gt;This post covers React's origins, architecture, lifecycle, JSX, and whatnot&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/caa50aca7d452e3102e3ebe42b8d6b56"&gt;React vs the Competition&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#es2020-has-been-finalized-here-is-what-im-excited-about" class="anchor"&gt;
+  &lt;/a&gt;
+  4️⃣ ES2020 Has Been Finalized. Here is What I'm Excited About
+&lt;/h2&gt;
+
+&lt;p&gt;🆙 Exciting times ahead for us, javascript developers, with the discussions about the future features. &lt;strong&gt;The post lists some of the best features to expect of ES2020&lt;/strong&gt;. By the way, many of them available already in typescript or by using babel.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/29cae741b2c48feb1b8ac3ff1111b460"&gt;ES2020 Has Been Finalized. Here is What I'm Excited About&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#developing-with-deno-rest-api" class="anchor"&gt;
+  &lt;/a&gt;
+  5️⃣ Developing with Deno: Rest API
+&lt;/h2&gt;
+
+&lt;p&gt;The hype continues and here we are with another deno blog post. &lt;strong&gt;If you want to kickstart your deno adventure and learn how to build a REST API this one is exactly for you&lt;/strong&gt;. 🦖&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/cf7e3b15f9343d0d759adffd8f3aedc7"&gt;Developing with Deno: Rest API&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#state-of-micro-frontends" class="anchor"&gt;
+  &lt;/a&gt;
+  6️⃣ State of Micro Frontends
+&lt;/h2&gt;
+
+&lt;p&gt;Micro Frontends always fascinated me but I've never had to chance to try it out. &lt;strong&gt;This is a great write-up about the different use cases for Micro Frontends and how to get it going&lt;/strong&gt;. 🧩&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/1dbb9ca4e619d58075ed75024205c1ad"&gt;State of Micro Frontends&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#for-wtf-reason-would-we-build-another-js-framework" class="anchor"&gt;
+  &lt;/a&gt;
+  7️⃣ For wtf reason would we build another JS framework?
+&lt;/h2&gt;
+
+&lt;p&gt;🆙 The title here is a tricky one, as this post actually promotes a new platform called GlueCodes. &lt;strong&gt;GlueCodes is a new IDE and a set of web components to boost web development&lt;/strong&gt;. ⚡️&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/4df917aa6446e5174c5e08c8669c0027"&gt;For wtf reason would we build another JS framework?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#stealing-secrets-from-developers-using-websockets" class="anchor"&gt;
+  &lt;/a&gt;
+  8️⃣ Stealing secrets from developers using WebSockets
+&lt;/h2&gt;
+
+&lt;p&gt;This one is pretty awesome and hardcore! Apparently, WebSockets are less protected by the browsers and that creates a real security breach. &lt;strong&gt;The author shows how an "innocent" website can listen to your webpack dev server without you even know&lt;/strong&gt;. 🤫&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/ba050609146ca6f8aa1e0ebaed4298c4"&gt;Stealing secrets from developers using WebSockets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#how-to-build-a-mobile-app-with-low-cost-and-highquality" class="anchor"&gt;
+  &lt;/a&gt;
+  9️⃣ How To Build A Mobile App With Low Cost and High-Quality
+&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Great insights about price estimation of an outsourced mobile app development&lt;/strong&gt;. This can be very beneficial for both the freelancer and the company. 💰&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/98769d552b38badd35c7f1a803b4bc62"&gt;How To Build A Mobile App With Low Cost and High-Quality&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#vue-vs-the-competition" class="anchor"&gt;
+  &lt;/a&gt;
+  🔟 Vue vs. The Competition
+&lt;/h2&gt;
+
+&lt;p&gt;Another part of the series just like #3. &lt;strong&gt;Learn what differs Vue from other libraries and what its origin story&lt;/strong&gt;. 🤖&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://app.dailynow.co/r/6c801e4dbbdfe2d0c8d14710dbe31ca5"&gt;Vue vs. The Competition&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+  &lt;a href="#wrap-up" class="anchor"&gt;
+  &lt;/a&gt;
+  🙌 Wrap Up!
+&lt;/h2&gt;
+
+&lt;p&gt;That was all for this week. We will come back with another list of interesting development posts next week. Stay safe. Peace! ✌️&lt;/p&gt;
+
+
+
+
+
+&lt;center&gt; 👋 Follow us on &lt;a href="https://r.daily.dev/twitter"&gt;Twitter&lt;/a&gt; to stay up-to-date! &lt;/center&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;a href="https://r.daily.dev/web"&gt;Thanks to Daily&lt;/a&gt;, developers can focus on code instead of searching for news. Get immediate access to all these posts and much more just by opening a new tab.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://r.daily.dev/web"&gt;&lt;img src="https://res.cloudinary.com/practicaldev/image/fetch/s--dBpfnoTv--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/od2407i0eogvtdm0ddhk.jpeg" alt="Daily Poster"&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+      <category>javascript</category>
+      <category>deno</category>
+      <category>react</category>
+      <category>vue</category>
+    </item>
+  </channel>
+</rss>

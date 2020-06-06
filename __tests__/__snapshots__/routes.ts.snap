@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return 200 even if website is not available 1`] = `
+Object {
+  "type": "unavailable",
+}
+`;
+
+exports[`should scrape even if not all information is available 1`] = `
+Object {
+  "logo": "https://daily.dev/favicon-logo-192x192.png",
+  "name": null,
+  "rss": Array [],
+  "type": "website",
+  "website": "http://localhost:6789/",
+}
+`;
+
+exports[`should scrape rss feed and crawl the website 1`] = `
+Object {
+  "logo": "https://daily.dev/favicon-logo-192x192.png",
+  "name": "Daily",
+  "rss": Array [
+    Object {
+      "title": "RSS",
+      "url": "http://localhost:6789/rss.xml",
+    },
+  ],
+  "type": "website",
+  "website": "http://localhost:6789/",
+}
+`;
+
+exports[`should scrape rss feed even if website is not available 1`] = `
+Object {
+  "logo": null,
+  "name": null,
+  "rss": Array [
+    Object {
+      "title": "RSS",
+      "url": "http://localhost:6789/rss.xml",
+    },
+  ],
+  "type": "website",
+  "website": "http://localhost:6789/",
+}
+`;
+
+exports[`should scrape the website for source information 1`] = `
+Object {
+  "logo": "https://daily.dev/favicon-logo-192x192.png",
+  "name": "Daily",
+  "rss": Array [
+    Object {
+      "title": "RSS",
+      "url": "http://localhost:6789/rss.xml",
+    },
+  ],
+  "type": "website",
+  "website": "http://localhost:6789/",
+}
+`;
