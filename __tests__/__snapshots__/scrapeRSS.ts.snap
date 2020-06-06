@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not find rss 1`] = `Array []`;
+
+exports[`should scrape a single rss 1`] = `
+Array [
+  Object {
+    "title": "RSS",
+    "url": "https://daily.dev/rss.xml",
+  },
+]
+`;
+
+exports[`should scrape multiple rss 1`] = `
+Array [
+  Object {
+    "title": "RSS",
+    "url": "https://daily.dev/rss.xml",
+  },
+  Object {
+    "title": "RSS2",
+    "url": "https://daily.dev/rss2.xml",
+  },
+  Object {
+    "title": "RSS3",
+    "url": "https://daily.dev/rss3.xml",
+  },
+]
+`;
+
+exports[`should scrape relative rss 1`] = `
+Array [
+  Object {
+    "title": "RSS",
+    "url": "http://localhost:6789/rss.xml",
+  },
+]
+`;
