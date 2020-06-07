@@ -25,6 +25,15 @@ it('should scrape the site name', async () => {
   expect(res).toMatchSnapshot();
 });
 
+it('should fallback to title', async () => {
+  const res = await scrape(
+    'http://localhost:6789/title.html',
+    browser,
+    scrapeSiteName,
+  );
+  expect(res).toEqual('Daily');
+});
+
 it('should return null when no site name', async () => {
   const res = await scrape(
     'http://localhost:6789/noMeta.html',

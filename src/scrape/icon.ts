@@ -31,6 +31,11 @@ export const scrapeIcon = async (
     );
   }
   if (!selected) {
+    [selected] = await page.$$eval('link[rel="shortcut icon"]', (el) =>
+      el.map((x): string => x.getAttribute('href')),
+    );
+  }
+  if (!selected) {
     return null;
   }
   return url.resolve(page.url(), selected);

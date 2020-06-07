@@ -15,12 +15,14 @@ export interface RSSFeed {
 
 export const scrapeRssLink = async (page: puppeteer.Page): Promise<RSS[]> => {
   const rss = await page.$$eval('link[rel="alternate"][type*="xml"]', (el) =>
-    el.map(
-      (x): RSS => ({
-        url: x.getAttribute('href'),
-        title: x.getAttribute('title'),
-      }),
-    ),
+    el
+      .map(
+        (x): RSS => ({
+          url: x.getAttribute('href'),
+          title: x.getAttribute('title'),
+        }),
+      )
+      .filter((x) => !!x.title),
   );
   return rss.map((x) => ({ ...x, url: url.resolve(page.url(), x.url) }));
 };

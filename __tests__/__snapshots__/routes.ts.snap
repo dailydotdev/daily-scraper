@@ -9,7 +9,7 @@ Object {
 exports[`should scrape even if not all information is available 1`] = `
 Object {
   "logo": "https://daily.dev/favicon-logo-192x192.png",
-  "name": null,
+  "name": "Daily",
   "rss": Array [],
   "type": "website",
   "website": "http://localhost:6789/",

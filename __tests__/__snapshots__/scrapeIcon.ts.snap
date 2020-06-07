@@ -4,6 +4,8 @@ exports[`should fallback to apple-touch-icon when icon is not available 1`] = `"
 
 exports[`should fallback to msapplication-TileImage 1`] = `"https://daily.dev/favicon-tile.png"`;
 
+exports[`should fallback to shortcut icon 1`] = `"https://daily.dev/favicon-tile.png"`;
+
 exports[`should return absolute url 1`] = `"http://localhost:6789/favicon-logo-32x32.png"`;
 
 exports[`should scrape a the best resolution icon 1`] = `"https://daily.dev/favicon-logo-192x192.png"`;

@@ -52,6 +52,15 @@ it('should fallback to msapplication-TileImage', async () => {
   expect(res).toMatchSnapshot();
 });
 
+it('should fallback to shortcut icon', async () => {
+  const res = await scrape(
+    'http://localhost:6789/shortcutImage.html',
+    browser,
+    scrapeIcon,
+  );
+  expect(res).toMatchSnapshot();
+});
+
 it('should return absolute url', async () => {
   const res = await scrape(
     'http://localhost:6789/relIcon.html',
