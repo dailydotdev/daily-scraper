@@ -57,10 +57,20 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - {{ template "daily-scraper.name" . }}
+                  - key: release
+                    operator: In
+                    values:
+                    - {{ .Release.Name }}
+              topologyKey: "kubernetes.io/hostname"
     {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
