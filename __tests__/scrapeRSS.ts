@@ -25,9 +25,27 @@ it('should scrape a single rss', async () => {
   expect(res).toMatchSnapshot();
 });
 
+it('should scrape a single rss with no title', async () => {
+  const res = await scrape(
+    'http://localhost:6789/singleRSSNoTitle.html',
+    browser,
+    scrapeRssLink,
+  );
+  expect(res).toMatchSnapshot();
+});
+
 it('should scrape multiple rss', async () => {
   const res = await scrape(
     'http://localhost:6789/multipleRSS.html',
+    browser,
+    scrapeRssLink,
+  );
+  expect(res).toMatchSnapshot();
+});
+
+it('should scrape multiple rss and filter feeds without title', async () => {
+  const res = await scrape(
+    'http://localhost:6789/multipleRSSNoTitle.html',
     browser,
     scrapeRssLink,
   );
