@@ -3,8 +3,6 @@ import { FastifyInstance } from 'fastify';
 import * as helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
 import * as rateLimit from 'fastify-rate-limit';
-import * as caching from 'fastify-caching';
-import * as abstractCache from 'abstract-cache';
 import * as puppeteer from 'puppeteer';
 import * as genericPool from 'generic-pool';
 
@@ -73,7 +71,7 @@ const pptrPool = genericPool.createPool(
       }),
     destroy: (client) => client.close(),
   },
-  { min: 1, max: 5 },
+  { min: 2, max: 5 },
 );
 
 export default function app(): FastifyInstance {
@@ -108,13 +106,6 @@ export default function app(): FastifyInstance {
     });
   }
 
-  app.register(caching, {
-    privacy: 'public',
-    expiresIn: 3600,
-    cache: abstractCache({ useAwait: false }),
-    prefix: '/scrape',
-  });
-
   app.get('/scrape/source', async (req, res) => {
     const { url } = req.query;
     if (!url || !url.length) {
@@ -129,6 +120,11 @@ export default function app(): FastifyInstance {
           if (res.status() >= 400) {
             throw new Error('unexpected response');
           }
+
+          page.on('error', (msg) => {
+            throw msg;
+          });
+
           const [source, rss] = await Promise.all([
             scrapeSource(page),
             readRssFeed(page, res).catch(() => null),

@@ -8,11 +8,18 @@ export async function scrape<T>(
   scraper: Scraper<T>,
 ): Promise<T> {
   const page = await browser.newPage();
-  const res = await page.goto(url, {
-    waitUntil: 'load',
-    timeout: 20000,
-  });
-  return scraper(page, res);
+  try {
+    const res = await page.goto(url, {
+      waitUntil: 'load',
+      timeout: 20000,
+    });
+    const ret = await scraper(page, res);
+    await page.close();
+    return ret;
+  } catch (err) {
+    await page.close();
+    throw err;
+  }
 }
 
 export * from './icon';

@@ -25,7 +25,6 @@ it('should scrape the website for source information', async () => {
   const res = await request(app.server)
     .get('/scrape/source')
     .query({ url: 'http://localhost:6789/' })
-    .expect('cache-control', 'public, max-age=3600')
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
@@ -35,7 +34,6 @@ it('should scrape even if not all information is available', async () => {
   const res = await request(app.server)
     .get('/scrape/source')
     .query({ url: 'http://localhost:6789/' })
-    .expect('cache-control', 'public, max-age=3600')
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
@@ -45,7 +43,6 @@ it('should scrape rss feed and crawl the website', async () => {
   const res = await request(app.server)
     .get('/scrape/source')
     .query({ url: 'http://localhost:6789/rss.xml' })
-    .expect('cache-control', 'public, max-age=3600')
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
@@ -55,7 +52,6 @@ it('should scrape rss feed even if website is not available', async () => {
   const res = await request(app.server)
     .get('/scrape/source')
     .query({ url: 'http://localhost:6789/rss.xml' })
-    .expect('cache-control', 'public, max-age=3600')
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
@@ -65,7 +61,6 @@ it('should return 200 even if website is not available', async () => {
   const res = await request(app.server)
     .get('/scrape/source')
     .query({ url: 'http://localhost:6789/notfound' })
-    .expect('cache-control', 'public, max-age=3600')
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
