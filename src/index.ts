@@ -172,6 +172,7 @@ export default function app(): FastifyInstance {
       req.log.warn({ err, url }, 'failed to scrape');
       res.status(200).send({ type: 'unavailable' });
     }
+    await browser.close();
     // await pptrPool.release(browser);
   });
 
