@@ -71,7 +71,12 @@ const pptrPool = genericPool.createPool(
       }),
     destroy: (client) => client.close(),
   },
-  { min: 2, max: 5 },
+  {
+    min: 1,
+    max: 3,
+    acquireTimeoutMillis: 5000,
+    evictionRunIntervalMillis: 1000 * 60 * 10,
+  },
 );
 
 export default function app(): FastifyInstance {
