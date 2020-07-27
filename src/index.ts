@@ -70,7 +70,6 @@ const pptrPool = genericPool.createPool(
         args: [
           '--disable-dev-shm-usage',
           '--disable-accelerated-2d-canvas',
-          '--no-first-run',
           '--single-process',
           '--disable-gpu',
         ],
@@ -81,7 +80,7 @@ const pptrPool = genericPool.createPool(
   {
     min: 1,
     max: 3,
-    evictionRunIntervalMillis: 1000 * 60 * 10,
+    evictionRunIntervalMillis: 1000 * 60,
   },
 );
 
