@@ -70,7 +70,6 @@ const pptrPool = genericPool.createPool(
         args: [
           '--disable-dev-shm-usage',
           '--disable-accelerated-2d-canvas',
-          '--no-first-run',
           '--single-process',
           '--disable-gpu',
         ],
@@ -79,9 +78,9 @@ const pptrPool = genericPool.createPool(
     destroy: (client) => client.close(),
   },
   {
-    min: 1,
+    min: 0,
     max: 3,
-    evictionRunIntervalMillis: 1000 * 60 * 10,
+    evictionRunIntervalMillis: 1000 * 60,
   },
 );
 
