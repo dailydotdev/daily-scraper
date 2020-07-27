@@ -74,7 +74,7 @@ const pptrPool = genericPool.createPool(
   {
     min: 1,
     max: 3,
-    acquireTimeoutMillis: 5000,
+    acquireTimeoutMillis: 10000,
     evictionRunIntervalMillis: 1000 * 60 * 10,
   },
 );
