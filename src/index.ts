@@ -78,7 +78,7 @@ const pptrPool = genericPool.createPool(
     destroy: (client) => client.close(),
   },
   {
-    min: 0,
+    min: 1,
     max: 3,
     evictionRunIntervalMillis: 1000 * 60,
   },
@@ -121,16 +121,7 @@ export default function app(): FastifyInstance {
     if (!url || !url.length) {
       return res.status(400).send();
     }
-    const browser = await puppeteer.launch({
-      args: [
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--single-process',
-        '--disable-gpu',
-      ],
-      headless: true,
-    });
-    // const browser = await pptrPool.acquire();
+    const browser = await pptrPool.acquire();
     try {
       let data = await scrape(
         url,
@@ -172,8 +163,7 @@ export default function app(): FastifyInstance {
       req.log.warn({ err, url }, 'failed to scrape');
       res.status(200).send({ type: 'unavailable' });
     }
-    await browser.close();
-    // await pptrPool.release(browser);
+    await pptrPool.release(browser);
   });
 
   return app;
