@@ -95,6 +95,7 @@ export default function app(): FastifyInstance {
 
   app.addHook('onClose', async (instance, done) => {
     await pptrPool.drain();
+    await pptrPool.clear();
     done();
   });
 
@@ -116,7 +117,8 @@ export default function app(): FastifyInstance {
     if (!url || !url.length) {
       return res.status(400).send();
     }
-    const browser = await pptrPool.acquire();
+    const poolItem = await pptrPool.acquire();
+    const browser = await poolItem.browser;
     try {
       let data = await scrape(
         url,
@@ -158,7 +160,7 @@ export default function app(): FastifyInstance {
       req.log.warn({ err, url }, 'failed to scrape');
       res.status(200).send({ type: 'unavailable' });
     }
-    await pptrPool.release(browser);
+    await pptrPool.release(poolItem);
   });
 
   return app;
