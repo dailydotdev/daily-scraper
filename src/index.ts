@@ -4,7 +4,7 @@ import * as helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
 import * as rateLimit from 'fastify-rate-limit';
 import * as puppeteer from 'puppeteer';
-import * as genericPool from 'generic-pool';
+import * as createBrowserless from '@browserless/pool';
 
 import './config';
 import './profiler';
@@ -63,25 +63,20 @@ const scrapeSource = async (
   };
 };
 
-const pptrPool = genericPool.createPool(
-  {
-    create: () =>
-      puppeteer.launch({
-        args: [
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--single-process',
-          '--disable-gpu',
-        ],
-        headless: true,
-      }),
-    destroy: (client) => client.close(),
-  },
+const pptrPool = createBrowserless(
   {
     min: 1,
     max: 3,
-    evictionRunIntervalMillis: 1000 * 60 * 10,
+    timeout: 300000,
+  },
+  {
+    args: [
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--single-process',
+      '--disable-gpu',
+    ],
+    headless: true,
   },
 );
 
@@ -100,7 +95,6 @@ export default function app(): FastifyInstance {
 
   app.addHook('onClose', async (instance, done) => {
     await pptrPool.drain();
-    await pptrPool.clear();
     done();
   });
 

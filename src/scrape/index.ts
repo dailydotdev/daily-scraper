@@ -4,10 +4,11 @@ type Scraper<T> = (page: puppeteer.Page, res: puppeteer.Response) => Promise<T>;
 
 export async function scrape<T>(
   url: string,
-  browser: puppeteer.Browser,
+  // eslint-disable-next-line
+  browser: any,
   scraper: Scraper<T>,
 ): Promise<T> {
-  const page = await browser.newPage();
+  const page = await browser.page();
   try {
     const res = await page.goto(url, {
       waitUntil: 'load',
