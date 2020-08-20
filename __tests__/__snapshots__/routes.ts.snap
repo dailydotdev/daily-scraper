@@ -33,7 +33,7 @@ Object {
 
 exports[`should scrape rss feed even if website is not available 1`] = `
 Object {
-  "logo": null,
+  "logo": "https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg",
   "name": null,
   "rss": Array [
     Object {
