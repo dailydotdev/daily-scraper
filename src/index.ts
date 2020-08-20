@@ -158,6 +158,10 @@ export default function app(): FastifyInstance {
         }
         data.rss = [{ title: 'RSS', url }];
       }
+      if (!data.logo) {
+        data.logo =
+          'https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg';
+      }
       res.status(200).send(data);
     } catch (err) {
       req.log.warn({ err, url }, 'failed to scrape');
