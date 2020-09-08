@@ -7,7 +7,6 @@ import * as puppeteer from 'puppeteer';
 import * as genericPool from 'generic-pool';
 
 import './config';
-import './profiler';
 import trace from './trace';
 import auth from './auth';
 import {
