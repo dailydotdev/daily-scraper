@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/dailydotdev/daily-scraper#readme",
   "dependencies": {
-    "@google-cloud/profiler": "^4.0.0",
     "@google-cloud/trace-agent": "^5.0.0",
     "dotenv": "^8.2.0",
     "fast-json-stringify": "^2.0.0",

@@ -7,7 +7,6 @@ import * as puppeteer from 'puppeteer';
 import * as genericPool from 'generic-pool';
 
 import './config';
-import './profiler';
 import trace from './trace';
 import auth from './auth';
 import {
@@ -84,6 +83,14 @@ export default function app(): FastifyInstance {
     logger: true,
     disableRequestLogging: true,
     trustProxy: isProd,
+  });
+
+  pptrPool.on('factoryCreateError', (err) => {
+    app.log.fatal({ err }, 'failed to create a puppeteer instance');
+  });
+
+  pptrPool.on('factoryDestroyError', (err) => {
+    app.log.fatal({ err }, 'failed to destroy a puppeteer instance');
   });
 
   app.register(helmet);
