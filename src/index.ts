@@ -81,6 +81,7 @@ const pptrPool = genericPool.createPool(
     min: 1,
     max: 3,
     evictionRunIntervalMillis: 1000 * 60,
+    acquireTimeoutMillis: 1000 * 10,
   },
 );
 
@@ -121,6 +122,7 @@ export default function app(): FastifyInstance {
     if (!url || !url.length) {
       return res.status(400).send();
     }
+    req.log.info({ url }, 'starting to scrape source');
     const browser = await pptrPool.acquire();
     try {
       let data = await scrape(
