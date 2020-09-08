@@ -86,6 +86,14 @@ export default function app(): FastifyInstance {
     trustProxy: isProd,
   });
 
+  pptrPool.on('factoryCreateError', (err) => {
+    app.log.fatal({ err }, 'failed to create a puppeteer instance');
+  });
+
+  pptrPool.on('factoryDestroyError', (err) => {
+    app.log.fatal({ err }, 'failed to destroy a puppeteer instance');
+  });
+
   app.register(helmet);
   app.register(trace, { enabled: isProd });
   app.register(auth, { secret: process.env.ACCESS_SECRET });
