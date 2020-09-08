@@ -15,11 +15,11 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-# Add Tini
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-ENTRYPOINT ["/tini", "--"]
+# If running Docker >= 1.13.0 use docker run's --init arg to reap zombie processes, otherwise
+# uncomment the following lines to have `dumb-init` as PID 1
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+ENTRYPOINT ["dumb-init", "--"]
 
 # Add user so we don't need --no-sandbox.
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \

@@ -65,16 +65,7 @@ const scrapeSource = async (
 
 const pptrPool = genericPool.createPool(
   {
-    create: () =>
-      puppeteer.launch({
-        args: [
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--single-process',
-          '--disable-gpu',
-        ],
-        headless: true,
-      }),
+    create: () => puppeteer.launch(),
     destroy: (client) => client.close(),
   },
   {
@@ -82,6 +73,7 @@ const pptrPool = genericPool.createPool(
     max: 3,
     evictionRunIntervalMillis: 1000 * 60,
     acquireTimeoutMillis: 1000 * 10,
+    softIdleTimeoutMillis: 1000 * 60 * 5,
   },
 );
 
