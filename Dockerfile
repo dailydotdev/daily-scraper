@@ -1,4 +1,4 @@
-FROM node:12-slim
+FROM node:12.19-slim
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
