@@ -47,7 +47,7 @@
     "jest": "^26.0.1",
     "jest-junit": "^10.0.0",
     "nodemon": "^2.0.4",
-    "pino-pretty": "^4.0.0",
+    "pino-pretty": "^4.3.0",
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-jest": "^26.1.0",
