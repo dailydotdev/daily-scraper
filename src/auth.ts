@@ -1,5 +1,6 @@
 import {
   FastifyInstance,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FastifyRequest,
   DefaultQuery,
   DefaultParams,
@@ -8,6 +9,7 @@ import {
 import * as fp from 'fastify-plugin';
 
 declare module 'fastify' {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   interface FastifyRequest<
     HttpRequest,
     Query = DefaultQuery,
@@ -19,6 +21,7 @@ declare module 'fastify' {
     userId?: string;
     premium?: boolean;
   }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 }
 
 interface Options {

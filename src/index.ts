@@ -1,5 +1,5 @@
 import * as fastify from 'fastify';
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyReply } from 'fastify';
 import * as helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
 import * as rateLimit from 'fastify-rate-limit';
@@ -44,6 +44,8 @@ interface ScrapeSourceRSS {
 interface ScrapeSourceUnavailable {
   type: 'unavailable';
 }
+
+type ScrapeSourceResult = ScrapeSourceWebsite | ScrapeSourceUnavailable;
 
 const scrapeSource = async (
   page: puppeteer.Page,
@@ -116,60 +118,63 @@ export default function app(): FastifyInstance {
     });
   }
 
-  app.get('/scrape/source', async (req, res) => {
-    const { url } = req.query;
-    if (!url || !url.length) {
-      return res.status(400).send();
-    }
-    req.log.info({ url }, 'starting to scrape source');
-    const browser = await pptrPool.acquire();
-    try {
-      let data = await scrape(
-        url,
-        browser,
-        async (page, res): Promise<ScrapeSourceWebsite | ScrapeSourceRSS> => {
-          if (res.status() >= 400) {
-            throw new Error('unexpected response');
-          }
+  app.get(
+    '/scrape/source',
+    async (req, res): Promise<FastifyReply<ScrapeSourceResult | unknown>> => {
+      const { url } = req.query;
+      if (!url || !url.length) {
+        return res.status(400).send();
+      }
+      req.log.info({ url }, 'starting to scrape source');
+      const browser = await pptrPool.acquire();
+      try {
+        let data = await scrape(
+          url,
+          browser,
+          async (page, res): Promise<ScrapeSourceWebsite | ScrapeSourceRSS> => {
+            if (res.status() >= 400) {
+              throw new Error('unexpected response');
+            }
 
-          page.on('error', (msg) => {
-            throw msg;
-          });
+            page.on('error', (msg) => {
+              throw msg;
+            });
 
-          const [source, rss] = await Promise.all([
-            scrapeSource(page),
-            readRssFeed(page, res).catch(() => null),
-          ]);
-          if (rss) {
-            return { type: 'rss', rss: page.url(), website: rss?.meta?.link };
+            const [source, rss] = await Promise.all([
+              scrapeSource(page),
+              readRssFeed(page, res).catch(() => null),
+            ]);
+            if (rss) {
+              return { type: 'rss', rss: page.url(), website: rss?.meta?.link };
+            }
+            return source;
+          },
+        );
+        if (data.type === 'rss') {
+          const url = data.rss;
+          try {
+            data = await scrape(
+              data.website?.split('?')?.[0],
+              browser,
+              scrapeSource,
+            );
+          } catch (err) {
+            data = { type: 'website', rss: [] };
           }
-          return source;
-        },
-      );
-      if (data.type === 'rss') {
-        const url = data.rss;
-        try {
-          data = await scrape(
-            data.website?.split('?')?.[0],
-            browser,
-            scrapeSource,
-          );
-        } catch (err) {
-          data = { type: 'website', rss: [] };
+          data.rss = [{ title: 'RSS', url }];
         }
-        data.rss = [{ title: 'RSS', url }];
+        if (!data.logo) {
+          data.logo =
+            'https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg';
+        }
+        res.status(200).send(data);
+      } catch (err) {
+        req.log.warn({ err, url }, 'failed to scrape');
+        res.status(200).send({ type: 'unavailable' });
       }
-      if (!data.logo) {
-        data.logo =
-          'https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg';
-      }
-      res.status(200).send(data);
-    } catch (err) {
-      req.log.warn({ err, url }, 'failed to scrape');
-      res.status(200).send({ type: 'unavailable' });
-    }
-    await pptrPool.release(browser);
-  });
+      await pptrPool.release(browser);
+    },
+  );
 
   return app;
 }
