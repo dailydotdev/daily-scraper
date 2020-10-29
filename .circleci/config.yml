@@ -121,14 +121,14 @@ workflows:
 #            branches:
 #              only:
 #                - master
-      - gcp-gcr/add-image-tag:
-          requires:
-            - build_and_push_docker
-          context: GCR
-          image: $CIRCLE_PROJECT_REPONAME
-          source-tag: $CIRCLE_SHA1
-          target-tag: latest
-          filters:
-            branches:
-              only:
-                - master
+#      - gcp-gcr/add-image-tag:
+#          requires:
+#            - build_and_push_docker
+#          context: GCR
+#          image: $CIRCLE_PROJECT_REPONAME
+#          source-tag: $CIRCLE_SHA1
+#          target-tag: latest
+#          filters:
+#            branches:
+#              only:
+#                - master
