@@ -69,8 +69,7 @@ const pptrPool = genericPool.createPool(
     create: () =>
       puppeteer.launch({
         headless: true,
-        args: ['--disable-dev-shm-usage', '--disable-gpu'],
-        executablePath: 'google-chrome',
+        args: ['--disable-dev-shm-usage', '--disable-gpu', '--no-sandbox'],
       }),
     destroy: (client) => client.close(),
   },
