@@ -40,5 +40,6 @@ RUN npm i --only=prod
 
 COPY build ./
 
+ENTRYPOINT ["/usr/local/bin/gcp-get-secret"]
 CMD ["npm", "run", "start"]
 
