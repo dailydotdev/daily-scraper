@@ -1,7 +1,11 @@
+FROM binxio/gcp-get-secret
+
 FROM node:12.19-slim
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
+
+COPY --from=0 /gcp-get-secret /usr/local/bin/
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
