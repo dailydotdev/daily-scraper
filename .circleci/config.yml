@@ -60,9 +60,6 @@ jobs:
       - checkout
       - pulumi/login
       - run:
-          name: Export Pulumi variables
-          command: export GOOGLE_CLOUD_KEYFILE_JSON=$GCLOUD_SERVICE_KEY && export GOOGLE_PROJECT=$GOOGLE_PROJECT_ID
-      - run:
           name: Install dependencies
           command: npm i
           working_directory: infra
@@ -124,3 +121,4 @@ workflows:
             branches:
               only:
                 - master
+
