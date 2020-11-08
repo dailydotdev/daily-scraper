@@ -57,6 +57,7 @@ jobs:
   pulumi_preview:
     docker:
       - image: google/cloud-sdk
+    steps:
       - checkout
       - gcp-cli/initialize
       - pulumi/login
