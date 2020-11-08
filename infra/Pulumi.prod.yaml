@@ -1,0 +1,8 @@
+config:
+  gcp:project: devkit-prod
+  gcp:region: us-central1
+  scraper:env:
+    accessSecret:
+      secure: AAABANWpRT8sntlNPEJL9chM4gqVMagCOKjGub67cUBY5bZDGHE24MgLMbKMb6cAn299dQg9I/LyD2lCGIq6+/y8OiTRjGRHFForMMb9Hnw4eJyDvDtNrqkNTEZsklA=
+    nodeEnv: production
+  scraper:tag: "1"

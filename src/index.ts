@@ -66,7 +66,11 @@ const scrapeSource = async (
 
 const pptrPool = genericPool.createPool(
   {
-    create: () => puppeteer.launch(),
+    create: () =>
+      puppeteer.launch({
+        headless: true,
+        args: ['--disable-dev-shm-usage', '--disable-gpu', '--no-sandbox'],
+      }),
     destroy: (client) => client.close(),
   },
   {
