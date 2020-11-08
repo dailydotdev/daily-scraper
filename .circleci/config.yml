@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   gcp-gcr: circleci/gcp-gcr@0.6.0
-  gcp-cli: circleci/gcp-cli@1.8.1
   pulumi: pulumi/pulumi@2.0.0
 jobs:
   build:
@@ -56,11 +55,13 @@ jobs:
           tag: $CIRCLE_SHA1
   pulumi_preview:
     docker:
-      - image: google/cloud-sdk
+      - image: circleci/node:12.19
     steps:
       - checkout
-      - gcp-cli/initialize
       - pulumi/login
+      - run:
+          name: Export Pulumi variables
+          command: export GOOGLE_CLOUD_KEYFILE_JSON=$GCLOUD_SERVICE_KEY && export GOOGLE_PROJECT=$GOOGLE_PROJECT_ID
       - run:
           name: Install dependencies
           command: npm i
