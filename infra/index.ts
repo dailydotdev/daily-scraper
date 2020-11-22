@@ -12,9 +12,9 @@ const name = 'scraper';
 
 const imageTag = config.require('tag');
 
-const vpcConnector = infra.getOutput('serverlessVPC') as Output<
-  gcp.vpcaccess.Connector
->;
+const vpcConnector = infra.getOutput(
+  'serverlessVPC',
+) as Output<gcp.vpcaccess.Connector>;
 
 const serviceAccount = new gcp.serviceaccount.Account(`${name}-sa`, {
   accountId: `daily-${name}`,
