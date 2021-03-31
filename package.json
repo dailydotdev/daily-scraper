@@ -22,7 +22,7 @@
   "dependencies": {
     "@google-cloud/trace-agent": "^5.1.3",
     "dotenv": "^8.2.0",
-    "fast-json-stringify": "^2.5.2",
+    "fast-json-stringify": "^2.5.3",
     "fastify": "^2.15.3",
     "fastify-helmet": "^3.0.2",
     "fastify-rate-limit": "^3.0.1",
