@@ -27,7 +27,7 @@
     "fastify-helmet": "^3.0.2",
     "fastify-rate-limit": "^3.0.1",
     "feedparser": "^2.2.10",
-    "generic-pool": "^3.7.2",
+    "generic-pool": "^3.7.8",
     "puppeteer": "^7.0.0"
   },
   "devDependencies": {
