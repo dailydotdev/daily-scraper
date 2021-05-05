@@ -1,0 +1,64 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: fastify
+    versions:
+    - ">= 3.a, < 4"
+  - dependency-name: fastify-helmet
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: fastify-helmet
+    versions:
+    - ">= 5.a, < 6"
+  - dependency-name: fastify-rate-limit
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: fastify-rate-limit
+    versions:
+    - ">= 5.a, < 6"
+  - dependency-name: fastify-static
+    versions:
+    - ">= 3.a, < 4"
+  - dependency-name: fastify-static
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.24
+    - 14.14.27
+    - 14.14.28
+    - 14.14.34
+    - 14.14.35
+    - 14.14.41
+    - 15.0.0
+  - dependency-name: puppeteer
+    versions:
+    - 6.0.0
+    - 7.0.1
+    - 7.0.4
+    - 7.1.0
+    - 8.0.0
+  - dependency-name: eslint
+    versions:
+    - 7.23.0
+  - dependency-name: "@typescript-eslint/eslint-plugin"
+    versions:
+    - 4.15.1
+    - 4.17.0
+    - 4.19.0
+  - dependency-name: pino-pretty
+    versions:
+    - 4.7.1
+  - dependency-name: "@typescript-eslint/parser"
+    versions:
+    - 4.15.2
+    - 4.16.1
+    - 4.17.0
+    - 4.18.0
+  - dependency-name: typescript
+    versions:
+    - 4.1.4
