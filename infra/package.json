@@ -1,10 +1,12 @@
 {
-    "name": "scraper",
-    "devDependencies": {
-        "@types/node": "^10.0.0"
-    },
-    "dependencies": {
-        "@pulumi/pulumi": "^2.0.0",
-        "@pulumi/gcp": "^4.0.0"
-    }
+  "name": "scraper",
+  "devDependencies": {
+    "@types/node": "^15.12.2"
+  },
+  "dependencies": {
+    "@dailydotdev/pulumi-common": "git+https://github.com/dailydotdev/pulumi-common.git#v1.0.2",
+    "@pulumi/gcp": "^5.8.0",
+    "@pulumi/kubernetes": "^3.3.1",
+    "@pulumi/pulumi": "^3.4.0"
+  }
 }
