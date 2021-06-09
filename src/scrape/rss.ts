@@ -32,7 +32,7 @@ export const scrapeRssLink = async (page: puppeteer.Page): Promise<RSS[]> => {
 
 export const readRssFeed = async (
   page: puppeteer.Page,
-  res: puppeteer.Response,
+  res: puppeteer.HTTPResponse,
 ): Promise<RSSFeed> => {
   const contentType = res.headers()['content-type'];
   if (contentType.indexOf('xml') > -1) {

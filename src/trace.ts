@@ -24,7 +24,7 @@ declare module 'fastify' {
     Params = DefaultParams,
     Headers = DefaultHeaders,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Body = any
+    Body = any,
   > {
     span: traceAgent.PluginTypes.RootSpan;
   }
@@ -32,7 +32,7 @@ declare module 'fastify' {
   interface FastifyInstance<
     HttpServer = http.Server,
     HttpRequest = http.IncomingMessage,
-    HttpResponse = http.ServerResponse
+    HttpResponse = http.ServerResponse,
   > {
     tracer: traceAgent.PluginTypes.Tracer;
   }
