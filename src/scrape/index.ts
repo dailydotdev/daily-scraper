@@ -1,6 +1,9 @@
 import * as puppeteer from 'puppeteer';
 
-type Scraper<T> = (page: puppeteer.Page, res: puppeteer.Response) => Promise<T>;
+type Scraper<T> = (
+  page: puppeteer.Page,
+  res: puppeteer.HTTPResponse,
+) => Promise<T>;
 
 export async function scrape<T>(
   url: string,
