@@ -17,6 +17,7 @@ import {
   readRssFeed,
   RSS,
 } from './scrape';
+import { ServerResponse } from 'http';
 
 export const stringifyHealthCheck = fastJson({
   type: 'object',
@@ -46,6 +47,7 @@ interface ScrapeSourceUnavailable {
 }
 
 type ScrapeSourceResult = ScrapeSourceWebsite | ScrapeSourceUnavailable;
+type ScrapeMediumVoters = { voters?: number; failed?: boolean };
 
 const scrapeSource = async (
   page: puppeteer.Page,
@@ -62,6 +64,26 @@ const scrapeSource = async (
     rss,
     name,
   };
+};
+
+const scrapeMediumVoters = async (
+  page: puppeteer.Page,
+): Promise<ScrapeMediumVoters> => {
+  const state = await page.evaluate(() => window['__APOLLO_STATE__']);
+  if (state) {
+    const postKeys = Object.keys(state).filter((key) =>
+      key.startsWith('Post:'),
+    );
+    const voters = postKeys
+      .map((key) => state[key].voterCount)
+      .find((voters) => voters >= 0);
+    if (voters >= 0) {
+      return {
+        voters,
+      };
+    }
+  }
+  return { failed: true };
 };
 
 const pptrPool = genericPool.createPool(
@@ -176,6 +198,24 @@ export default function app(): FastifyInstance {
         req.log.warn({ err, url }, 'failed to scrape');
         res.status(200).send({ type: 'unavailable' });
       }
+      await pptrPool.release(browser);
+    },
+  );
+
+  app.get(
+    '/scrape/mediumVoters',
+    async (
+      req,
+      res,
+    ): Promise<FastifyReply<ScrapeMediumVoters | ServerResponse>> => {
+      const { url } = req.query;
+      if (!url || !url.length) {
+        return res.status(400).send();
+      }
+      req.log.info({ url }, 'starting to scrape medium');
+      const browser = await pptrPool.acquire();
+      const data = await scrape(url, browser, scrapeMediumVoters);
+      res.status(200).send(data);
       await pptrPool.release(browser);
     },
   );

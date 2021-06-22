@@ -64,3 +64,21 @@ it('should return 200 even if website is not available', async () => {
     .expect(200);
   expect(res.body).toMatchSnapshot();
 });
+
+it('should return the number of voters', async () => {
+  fileServer = await setupStaticServer();
+  const res = await request(app.server)
+    .get('/scrape/mediumVoters')
+    .query({ url: 'http://localhost:6789/mediumVoters.html' })
+    .expect(200);
+  expect(res.body).toEqual({ voters: 16 });
+});
+
+it('should return failed response when cannot find the number of voters', async () => {
+  fileServer = await setupStaticServer();
+  const res = await request(app.server)
+    .get('/scrape/mediumVoters')
+    .query({ url: 'http://localhost:6789/noMediumVoters.html' })
+    .expect(200);
+  expect(res.body).toEqual({ failed: true });
+});
