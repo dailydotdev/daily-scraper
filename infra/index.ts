@@ -32,7 +32,7 @@ const service = createCloudRunService(
   name,
   `gcr.io/daily-ops/daily-${name}:${imageTag}`,
   secrets,
-  { cpu: '1', memory: '512Mi' },
+  { cpu: '1', memory: '1Gi' },
   vpcConnector,
   serviceAccount,
   {
