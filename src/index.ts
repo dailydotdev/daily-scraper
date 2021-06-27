@@ -212,7 +212,6 @@ export default function app(): FastifyInstance {
       if (!url || !url.length) {
         return res.status(400).send();
       }
-      req.log.info({ url }, 'starting to scrape medium');
       const browser = await pptrPool.acquire();
       const data = await scrape(url, browser, scrapeMediumVoters);
       res.status(200).send(data);

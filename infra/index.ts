@@ -32,12 +32,13 @@ const service = createCloudRunService(
   name,
   `gcr.io/daily-ops/daily-${name}:${imageTag}`,
   secrets,
-  { cpu: '1', memory: '1Gi' },
+  { cpu: '2', memory: '2Gi' },
   vpcConnector,
   serviceAccount,
   {
     access: CloudRunAccess.Public,
     iamMemberName: `${name}-public`,
+    concurrency: 10,
   },
 );
 
