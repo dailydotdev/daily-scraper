@@ -2,7 +2,7 @@ import * as fastify from 'fastify';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import * as helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
-import * as rateLimit from 'fastify-rate-limit';
+// import * as rateLimit from 'fastify-rate-limit';
 import * as puppeteer from 'puppeteer';
 import * as genericPool from 'generic-pool';
 
@@ -97,7 +97,7 @@ const pptrPool = genericPool.createPool(
   },
   {
     min: 1,
-    max: 3,
+    max: 5,
     evictionRunIntervalMillis: 1000 * 60,
     acquireTimeoutMillis: 1000 * 10,
     softIdleTimeoutMillis: 1000 * 60 * 5,
@@ -136,13 +136,13 @@ export default function app(): FastifyInstance {
     res.send(stringifyHealthCheck({ status: 'ok' }));
   });
 
-  if (process.env.NODE_ENV !== 'test') {
-    app.register(rateLimit, {
-      max: 5,
-      timeWindow: '1 minute',
-      prefix: '/scrape',
-    });
-  }
+  // if (process.env.NODE_ENV !== 'test') {
+  //   app.register(rateLimit, {
+  //     max: 5,
+  //     timeWindow: '1 minute',
+  //     prefix: '/scrape',
+  //   });
+  // }
 
   app.get(
     '/scrape/source',
