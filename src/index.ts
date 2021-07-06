@@ -47,7 +47,7 @@ interface ScrapeSourceUnavailable {
 }
 
 type ScrapeSourceResult = ScrapeSourceWebsite | ScrapeSourceUnavailable;
-type ScrapeMediumVoters = { voters?: number; failed?: boolean };
+type ScrapeMediumVoters = { voters?: number; failed?: boolean; error?: string };
 
 const scrapeSource = async (
   page: puppeteer.Page,
@@ -68,7 +68,15 @@ const scrapeSource = async (
 
 const scrapeMediumVoters = async (
   page: puppeteer.Page,
+  res: puppeteer.HTTPResponse,
 ): Promise<ScrapeMediumVoters> => {
+  const status = res.status();
+  if (status !== 200) {
+    if (status >= 400 && status < 500) {
+      return { failed: true, error: '4xx' };
+    }
+    return { failed: true };
+  }
   const state = await page.evaluate(() => window['__APOLLO_STATE__']);
   if (state) {
     const postKeys = Object.keys(state).filter((key) =>
