@@ -82,3 +82,12 @@ it('should return failed response when cannot find the number of voters', async 
     .expect(200);
   expect(res.body).toEqual({ failed: true });
 });
+
+it('should indicate that the medium article does not exist', async () => {
+  fileServer = await setupStaticServer();
+  const res = await request(app.server)
+    .get('/scrape/mediumVoters')
+    .query({ url: 'http://localhost:6789/notfound.html' })
+    .expect(200);
+  expect(res.body).toEqual({ failed: true, error: '4xx' });
+});
