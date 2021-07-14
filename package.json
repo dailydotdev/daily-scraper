@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/feedparser": "^2.2.3",
     "@types/generic-pool": "^3.1.9",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
     "@types/puppeteer": "^5.4.3",
     "@types/supertest": "^2.0.11",
