@@ -38,7 +38,7 @@ const service = createCloudRunService(
   {
     access: CloudRunAccess.Public,
     iamMemberName: `${name}-public`,
-    concurrency: 5,
+    concurrency: 15,
   },
 );
 

@@ -18,6 +18,7 @@ import {
   RSS,
 } from './scrape';
 import { ServerResponse } from 'http';
+import { Screenshot, ScreenshotType } from './types';
 
 export const stringifyHealthCheck = fastJson({
   type: 'object',
@@ -105,7 +106,7 @@ const pptrPool = genericPool.createPool(
   },
   {
     min: 1,
-    max: 5,
+    max: 20,
     evictionRunIntervalMillis: 1000 * 60,
     acquireTimeoutMillis: 1000 * 10,
     softIdleTimeoutMillis: 1000 * 60 * 5,
@@ -223,6 +224,32 @@ export default function app(): FastifyInstance {
       const browser = await pptrPool.acquire();
       const data = await scrape(url, browser, scrapeMediumVoters);
       res.status(200).send(data);
+      await pptrPool.release(browser);
+    },
+  );
+
+  app.post<{ Body: ScreenshotType }>(
+    '/screenshot',
+    {
+      schema: {
+        body: Screenshot,
+      },
+    },
+    async (req, res) => {
+      const browser = await pptrPool.acquire();
+      const page = await browser.newPage();
+      await page.setContent(req.body.content, {
+        waitUntil: 'load',
+        timeout: 10000,
+      });
+
+      const element = await page.$(req.body.selector);
+      const buffer = await element.screenshot({
+        type: 'png',
+        encoding: 'binary',
+        omitBackground: true,
+      });
+      res.type('image/png').send(buffer);
       await pptrPool.release(browser);
     },
   );
