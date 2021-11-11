@@ -1,15 +1,23 @@
 import * as gcp from '@pulumi/gcp';
-import { Output } from '@pulumi/pulumi';
+import { Input, Output } from '@pulumi/pulumi';
 import {
+  bindK8sServiceAccountToGCP,
   CloudRunAccess,
+  config,
+  convertRecordToContainerEnvVars,
+  createAutoscaledExposedApplication,
   createCloudRunService,
   createEnvVarsFromSecret,
+  createKubernetesSecretFromRecord,
   createServiceAccountAndGrantRoles,
-  imageTag,
+  getImageTag,
+  getMemoryAndCpuMetrics,
   infra,
 } from '@dailydotdev/pulumi-common';
 
+const imageTag = getImageTag();
 const name = 'scraper';
+const image = `gcr.io/daily-ops/daily-${name}:${imageTag}`;
 
 const vpcConnector = infra.getOutput(
   'serverlessVPC',
@@ -26,13 +34,20 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
   ],
 );
 
+const limits: Input<{
+  [key: string]: Input<string>;
+}> = {
+  cpu: '2',
+  memory: '2Gi',
+};
+
 const secrets = createEnvVarsFromSecret(name);
 
 const service = createCloudRunService(
   name,
-  `gcr.io/daily-ops/daily-${name}:${imageTag}`,
+  image,
   secrets,
-  { cpu: '2', memory: '2Gi' },
+  limits,
   vpcConnector,
   serviceAccount,
   {
@@ -43,3 +58,44 @@ const service = createCloudRunService(
 );
 
 export const serviceUrl = service.statuses[0].url;
+
+const namespace = 'daily';
+const k8sServiceAccount = bindK8sServiceAccountToGCP(
+  '',
+  name,
+  namespace,
+  serviceAccount,
+);
+
+const envVars = config.requireObject<Record<string, string>>('env');
+
+createKubernetesSecretFromRecord({
+  data: envVars,
+  resourceName: 'k8s-secret',
+  name,
+  namespace,
+});
+
+createAutoscaledExposedApplication({
+  name,
+  namespace: namespace,
+  version: imageTag,
+  serviceAccount: k8sServiceAccount,
+  containers: [
+    {
+      name: 'app',
+      image,
+      ports: [{ name: 'http', containerPort: 3000, protocol: 'TCP' }],
+      readinessProbe: {
+        httpGet: { path: '/health', port: 'http' },
+      },
+      env: convertRecordToContainerEnvVars({ secretName: name, data: envVars }),
+      resources: {
+        requests: limits,
+        limits,
+      },
+    },
+  ],
+  maxReplicas: 5,
+  metrics: getMemoryAndCpuMetrics(),
+});
