@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   gcp-gcr: circleci/gcp-gcr@0.13.0
+  gcp-cli: circleci/gcp-cli@2.1.0
   pulumi: pulumi/pulumi@2.0.0
 jobs:
   build:
@@ -72,6 +73,11 @@ jobs:
       - image: circleci/node:12.19
     steps:
       - checkout
+      - gcp-cli/install
+      - gcp-cli/initialize
+      - run:
+          name: Get cluster credentials
+          command: gcloud container clusters get-credentials prod
       - pulumi/login
       - run:
           name: Install dependencies
