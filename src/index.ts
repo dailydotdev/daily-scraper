@@ -121,6 +121,7 @@ export default function app(): FastifyInstance {
     disableRequestLogging: true,
     trustProxy: isProd,
   });
+  app.server.keepAliveTimeout = 650 * 1000;
 
   pptrPool.on('factoryCreateError', (err) => {
     app.log.fatal({ err }, 'failed to create a puppeteer instance');

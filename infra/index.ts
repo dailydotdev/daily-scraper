@@ -1,27 +1,19 @@
-import * as gcp from '@pulumi/gcp';
-import { Input, Output } from '@pulumi/pulumi';
+import * as k8s from '@pulumi/kubernetes';
+import { Input } from '@pulumi/pulumi';
 import {
   bindK8sServiceAccountToGCP,
-  CloudRunAccess,
   config,
   convertRecordToContainerEnvVars,
   createAutoscaledExposedApplication,
-  createCloudRunService,
-  createEnvVarsFromSecret,
   createKubernetesSecretFromRecord,
   createServiceAccountAndGrantRoles,
   getImageTag,
   getMemoryAndCpuMetrics,
-  infra,
 } from '@dailydotdev/pulumi-common';
 
 const imageTag = getImageTag();
 const name = 'scraper';
 const image = `gcr.io/daily-ops/daily-${name}:${imageTag}`;
-
-const vpcConnector = infra.getOutput(
-  'serverlessVPC',
-) as Output<gcp.vpcaccess.Connector>;
 
 const { serviceAccount } = createServiceAccountAndGrantRoles(
   `${name}-sa`,
@@ -41,24 +33,6 @@ const limits: Input<{
   memory: '2Gi',
 };
 
-const secrets = createEnvVarsFromSecret(name);
-
-const service = createCloudRunService(
-  name,
-  image,
-  secrets,
-  limits,
-  vpcConnector,
-  serviceAccount,
-  {
-    access: CloudRunAccess.Public,
-    iamMemberName: `${name}-public`,
-    concurrency: 7,
-  },
-);
-
-export const serviceUrl = service.statuses[0].url;
-
 const namespace = 'daily';
 const k8sServiceAccount = bindK8sServiceAccountToGCP(
   '',
@@ -76,6 +50,11 @@ createKubernetesSecretFromRecord({
   namespace,
 });
 
+const probe: k8s.types.input.core.v1.Probe = {
+  httpGet: { path: '/health', port: 'http' },
+  initialDelaySeconds: 5,
+};
+
 createAutoscaledExposedApplication({
   name,
   namespace: namespace,
@@ -86,9 +65,8 @@ createAutoscaledExposedApplication({
       name: 'app',
       image,
       ports: [{ name: 'http', containerPort: 3000, protocol: 'TCP' }],
-      readinessProbe: {
-        httpGet: { path: '/health', port: 'http' },
-      },
+      readinessProbe: probe,
+      livenessProbe: probe,
       env: convertRecordToContainerEnvVars({ secretName: name, data: envVars }),
       resources: {
         requests: limits,
@@ -96,6 +74,6 @@ createAutoscaledExposedApplication({
       },
     },
   ],
-  maxReplicas: 5,
+  maxReplicas: 10,
   metrics: getMemoryAndCpuMetrics(),
 });
