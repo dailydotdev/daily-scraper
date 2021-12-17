@@ -74,6 +74,7 @@ createAutoscaledExposedApplication({
       },
     },
   ],
+  minReplicas: 4,
   maxReplicas: 10,
-  metrics: getMemoryAndCpuMetrics(),
+  metrics: getMemoryAndCpuMetrics(60),
 });
