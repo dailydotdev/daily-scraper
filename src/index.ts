@@ -17,7 +17,6 @@ import {
   readRssFeed,
   RSS,
 } from './scrape';
-import { ServerResponse } from 'http';
 import { Screenshot, ScreenshotType } from './types';
 
 export const stringifyHealthCheck = fastJson({
@@ -47,6 +46,7 @@ interface ScrapeSourceUnavailable {
   type: 'unavailable';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ScrapeSourceResult = ScrapeSourceWebsite | ScrapeSourceUnavailable;
 type ScrapeMediumVoters = { voters?: number; failed?: boolean; error?: string };
 
