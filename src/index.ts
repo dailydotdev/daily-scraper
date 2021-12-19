@@ -1,6 +1,6 @@
-import * as fastify from 'fastify';
-import { FastifyInstance, FastifyReply } from 'fastify';
-import * as helmet from 'fastify-helmet';
+import fastify from 'fastify';
+import { FastifyInstance } from 'fastify';
+import helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
 // import * as rateLimit from 'fastify-rate-limit';
 import * as puppeteer from 'puppeteer';
@@ -17,7 +17,6 @@ import {
   readRssFeed,
   RSS,
 } from './scrape';
-import { ServerResponse } from 'http';
 import { Screenshot, ScreenshotType } from './types';
 
 export const stringifyHealthCheck = fastJson({
@@ -47,6 +46,7 @@ interface ScrapeSourceUnavailable {
   type: 'unavailable';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ScrapeSourceResult = ScrapeSourceWebsite | ScrapeSourceUnavailable;
 type ScrapeMediumVoters = { voters?: number; failed?: boolean; error?: string };
 
@@ -154,9 +154,9 @@ export default function app(): FastifyInstance {
   //   });
   // }
 
-  app.get(
+  app.get<{ Querystring: { url?: string } }>(
     '/scrape/source',
-    async (req, res): Promise<FastifyReply<ScrapeSourceResult | unknown>> => {
+    async (req, res) => {
       const { url } = req.query;
       if (!url || !url.length) {
         return res.status(400).send();
@@ -212,12 +212,9 @@ export default function app(): FastifyInstance {
     },
   );
 
-  app.get(
+  app.get<{ Querystring: { url?: string } }>(
     '/scrape/mediumVoters',
-    async (
-      req,
-      res,
-    ): Promise<FastifyReply<ScrapeMediumVoters | ServerResponse>> => {
+    async (req, res) => {
       const { url } = req.query;
       if (!url || !url.length) {
         return res.status(400).send();

@@ -1,14 +1,5 @@
-import * as http from 'http';
-import { ServerResponse } from 'http';
-import {
-  FastifyInstance,
-  FastifyRequest,
-  DefaultQuery,
-  DefaultParams,
-  DefaultHeaders,
-  FastifyReply,
-} from 'fastify';
-import * as fp from 'fastify-plugin';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import fp from 'fastify-plugin';
 import * as traceAgent from '@google-cloud/trace-agent';
 import {
   parseContextFromHeader,
@@ -18,41 +9,31 @@ import { Constants } from '@google-cloud/trace-agent/build/src/constants';
 
 declare module 'fastify' {
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  interface FastifyRequest<
-    HttpRequest,
-    Query = DefaultQuery,
-    Params = DefaultParams,
-    Headers = DefaultHeaders,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Body = any,
-  > {
+  interface FastifyRequest {
     span: traceAgent.PluginTypes.RootSpan;
   }
 
-  interface FastifyInstance<
-    HttpServer = http.Server,
-    HttpRequest = http.IncomingMessage,
-    HttpResponse = http.ServerResponse,
-  > {
+  interface FastifyInstance {
     tracer: traceAgent.PluginTypes.Tracer;
   }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 }
 
 const getTraceContext = (req: FastifyRequest): TraceContext | null =>
-  parseContextFromHeader(req.headers[Constants.TRACE_CONTEXT_HEADER_NAME]);
+  parseContextFromHeader(
+    req.headers[Constants.TRACE_CONTEXT_HEADER_NAME] as string,
+  );
 
 const addSpanLabels = (
   span: traceAgent.PluginTypes.Span,
   req: FastifyRequest,
-  res: FastifyReply<ServerResponse>,
+  res: FastifyReply,
 ): void => {
   span.addLabel('/http/method', req.raw.method);
   span.addLabel('/http/id', req.id);
   span.addLabel('/http/source/ip', req.ip);
-  span.addLabel('/http/status_code', res.res.statusCode);
+  span.addLabel('/http/status_code', res.statusCode);
 };
-
 const createSpan = (
   tracer: traceAgent.PluginTypes.Tracer,
   name: string,

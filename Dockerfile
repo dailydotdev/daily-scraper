@@ -1,6 +1,6 @@
 FROM binxio/gcp-get-secret
 
-FROM node:12.19-slim
+FROM node:16-slim
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
@@ -31,10 +31,11 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /opt/app
 
+COPY package.json package-lock.json ./
+RUN chown -R pptruser:pptruser package.json package-lock.json ./
+
 # Run everything after as non-privileged user.
 USER pptruser
-
-COPY package.json package-lock.json ./
 
 RUN npm i --only=prod
 
