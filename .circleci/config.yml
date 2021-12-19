@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.19
+      - image: circleci/node:16
     steps:
       - checkout
       - restore_cache:
@@ -56,7 +56,7 @@ jobs:
           tag: $CIRCLE_SHA1
   pulumi_preview:
     docker:
-      - image: circleci/node:12.19
+      - image: circleci/node:14
     steps:
       - checkout
       - pulumi/login
@@ -70,7 +70,7 @@ jobs:
           working_directory: infra
   pulumi_up:
     docker:
-      - image: circleci/node:12.19
+      - image: circleci/node:14
     steps:
       - checkout
       - gcp-cli/install

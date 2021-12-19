@@ -1,6 +1,6 @@
-import * as fastify from 'fastify';
-import { FastifyInstance, FastifyReply } from 'fastify';
-import * as helmet from 'fastify-helmet';
+import fastify from 'fastify';
+import { FastifyInstance } from 'fastify';
+import helmet from 'fastify-helmet';
 import * as fastJson from 'fast-json-stringify';
 // import * as rateLimit from 'fastify-rate-limit';
 import * as puppeteer from 'puppeteer';
@@ -154,9 +154,9 @@ export default function app(): FastifyInstance {
   //   });
   // }
 
-  app.get(
+  app.get<{ Querystring: { url?: string } }>(
     '/scrape/source',
-    async (req, res): Promise<FastifyReply<ScrapeSourceResult | unknown>> => {
+    async (req, res) => {
       const { url } = req.query;
       if (!url || !url.length) {
         return res.status(400).send();
@@ -212,12 +212,9 @@ export default function app(): FastifyInstance {
     },
   );
 
-  app.get(
+  app.get<{ Querystring: { url?: string } }>(
     '/scrape/mediumVoters',
-    async (
-      req,
-      res,
-    ): Promise<FastifyReply<ScrapeMediumVoters | ServerResponse>> => {
+    async (req, res) => {
       const { url } = req.query;
       if (!url || !url.length) {
         return res.status(400).send();
