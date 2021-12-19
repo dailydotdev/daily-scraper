@@ -1,12 +1,12 @@
 import * as http from 'http';
 import { join } from 'path';
-import * as fastify from 'fastify';
-import * as fastifyStatic from 'fastify-static';
+import fastify, { FastifyInstance } from 'fastify';
+import fastifyStatic from 'fastify-static';
 
 export const setupStaticServer = async (
   rss?: string,
   index?: string,
-): Promise<fastify.FastifyInstance> => {
+): Promise<FastifyInstance> => {
   const app = fastify({ logger: false });
   app.register(fastifyStatic, {
     root: join(__dirname, 'fixture'),
