@@ -1,6 +1,6 @@
 FROM binxio/gcp-get-secret
 
-FROM node:12.19-slim
+FROM node:16-slim
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
