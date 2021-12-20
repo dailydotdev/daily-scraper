@@ -161,7 +161,6 @@ export default function app(): FastifyInstance {
   });
 
   app.get('/ready', (req, res) => {
-    req.log.info(`available instances: ${pptrPool.available}`);
     const isBusy = pptrPool.available === 0;
     res.type('application/health+json');
     if (isBusy) {
