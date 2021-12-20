@@ -146,6 +146,18 @@ export default function app(): FastifyInstance {
     res.send(stringifyHealthCheck({ status: 'ok' }));
   });
 
+  app.get('/ready', (req, res) => {
+    const isBusy = pptrPool.available === 0;
+    res.type('application/health+json');
+    if (isBusy) {
+      res
+        .status(503)
+        .send(stringifyHealthCheck({ status: 'no available resources' }));
+    } else {
+      res.send(stringifyHealthCheck({ status: 'ok' }));
+    }
+  });
+
   // if (process.env.NODE_ENV !== 'test') {
   //   app.register(rateLimit, {
   //     max: 5,

@@ -1,4 +1,3 @@
-import * as k8s from '@pulumi/kubernetes';
 import { Input } from '@pulumi/pulumi';
 import {
   bindK8sServiceAccountToGCP,
@@ -50,11 +49,6 @@ createKubernetesSecretFromRecord({
   namespace,
 });
 
-const probe: k8s.types.input.core.v1.Probe = {
-  httpGet: { path: '/health', port: 'http' },
-  initialDelaySeconds: 5,
-};
-
 createAutoscaledExposedApplication({
   name,
   namespace: namespace,
@@ -65,8 +59,14 @@ createAutoscaledExposedApplication({
       name: 'app',
       image,
       ports: [{ name: 'http', containerPort: 3000, protocol: 'TCP' }],
-      readinessProbe: probe,
-      livenessProbe: probe,
+      readinessProbe: {
+        httpGet: { path: '/ready', port: 'http' },
+        initialDelaySeconds: 10,
+      },
+      livenessProbe: {
+        httpGet: { path: '/health', port: 'http' },
+        initialDelaySeconds: 10,
+      },
       env: convertRecordToContainerEnvVars({ secretName: name, data: envVars }),
       resources: {
         requests: limits,
