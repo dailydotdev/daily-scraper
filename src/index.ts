@@ -113,6 +113,20 @@ const pptrPool = genericPool.createPool(
   },
 );
 
+const acquireAndRelease = async <T>(
+  callback: (browser: puppeteer.Browser) => Promise<T>,
+): Promise<T> => {
+  const browser = await pptrPool.acquire();
+  try {
+    const res = await callback(browser);
+    await pptrPool.release(browser);
+    return res;
+  } catch (err) {
+    await pptrPool.release(browser);
+    throw err;
+  }
+};
+
 export default function app(): FastifyInstance {
   const isProd = process.env.NODE_ENV === 'production';
 
@@ -174,53 +188,60 @@ export default function app(): FastifyInstance {
         return res.status(400).send();
       }
       req.log.info({ url }, 'starting to scrape source');
-      const browser = await pptrPool.acquire();
       try {
-        let data = await scrape(
-          url,
-          browser,
-          async (page, res): Promise<ScrapeSourceWebsite | ScrapeSourceRSS> => {
-            if (res.status() >= 400) {
-              throw new Error('unexpected response');
-            }
+        await acquireAndRelease(async (browser) => {
+          let data = await scrape(
+            url,
+            browser,
+            async (
+              page,
+              res,
+            ): Promise<ScrapeSourceWebsite | ScrapeSourceRSS> => {
+              if (res.status() >= 400) {
+                throw new Error('unexpected response');
+              }
 
-            page.on('error', (msg) => {
-              throw msg;
-            });
+              page.on('error', (msg) => {
+                throw msg;
+              });
 
-            const [source, rss] = await Promise.all([
-              scrapeSource(page),
-              readRssFeed(page, res).catch(() => null),
-            ]);
-            if (rss) {
-              return { type: 'rss', rss: page.url(), website: rss?.meta?.link };
+              const [source, rss] = await Promise.all([
+                scrapeSource(page),
+                readRssFeed(page, res).catch(() => null),
+              ]);
+              if (rss) {
+                return {
+                  type: 'rss',
+                  rss: page.url(),
+                  website: rss?.meta?.link,
+                };
+              }
+              return source;
+            },
+          );
+          if (data.type === 'rss') {
+            const url = data.rss;
+            try {
+              data = await scrape(
+                data.website?.split('?')?.[0],
+                browser,
+                scrapeSource,
+              );
+            } catch (err) {
+              data = { type: 'website', rss: [] };
             }
-            return source;
-          },
-        );
-        if (data.type === 'rss') {
-          const url = data.rss;
-          try {
-            data = await scrape(
-              data.website?.split('?')?.[0],
-              browser,
-              scrapeSource,
-            );
-          } catch (err) {
-            data = { type: 'website', rss: [] };
+            data.rss = [{ title: 'RSS', url }];
           }
-          data.rss = [{ title: 'RSS', url }];
-        }
-        if (!data.logo) {
-          data.logo =
-            'https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg';
-        }
-        res.status(200).send(data);
+          if (!data.logo) {
+            data.logo =
+              'https://res.cloudinary.com/daily-now/image/upload/logos/placeholder.jpg';
+          }
+          res.status(200).send(data);
+        });
       } catch (err) {
         req.log.warn({ err, url }, 'failed to scrape');
         res.status(200).send({ type: 'unavailable' });
       }
-      await pptrPool.release(browser);
     },
   );
 
@@ -231,10 +252,10 @@ export default function app(): FastifyInstance {
       if (!url || !url.length) {
         return res.status(400).send();
       }
-      const browser = await pptrPool.acquire();
-      const data = await scrape(url, browser, scrapeMediumVoters);
-      res.status(200).send(data);
-      await pptrPool.release(browser);
+      await acquireAndRelease(async (browser) => {
+        const data = await scrape(url, browser, scrapeMediumVoters);
+        res.status(200).send(data);
+      });
     },
   );
 
@@ -246,21 +267,21 @@ export default function app(): FastifyInstance {
       },
     },
     async (req, res) => {
-      const browser = await pptrPool.acquire();
-      const page = await browser.newPage();
-      await page.setContent(req.body.content, {
-        waitUntil: 'load',
-        timeout: 10000,
-      });
+      await acquireAndRelease(async (browser) => {
+        const page = await browser.newPage();
+        await page.setContent(req.body.content, {
+          waitUntil: 'load',
+          timeout: 10000,
+        });
 
-      const element = await page.$(req.body.selector);
-      const buffer = await element.screenshot({
-        type: 'png',
-        encoding: 'binary',
-        omitBackground: true,
+        const element = await page.$(req.body.selector);
+        const buffer = await element.screenshot({
+          type: 'png',
+          encoding: 'binary',
+          omitBackground: true,
+        });
+        res.type('image/png').send(buffer);
       });
-      res.type('image/png').send(buffer);
-      await pptrPool.release(browser);
     },
   );
 
