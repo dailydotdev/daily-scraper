@@ -105,8 +105,8 @@ const pptrPool = genericPool.createPool(
     destroy: (client) => client.close(),
   },
   {
-    min: 8,
-    max: 15,
+    min: 5,
+    max: 10,
     evictionRunIntervalMillis: 1000 * 60,
     acquireTimeoutMillis: 1000 * 10,
     softIdleTimeoutMillis: 1000 * 60 * 5,
