@@ -115,17 +115,7 @@ const pptrPool = genericPool.createPool(
 
 const acquireAndRelease = async <T>(
   callback: (browser: puppeteer.Browser) => Promise<T>,
-): Promise<T> => {
-  const browser = await pptrPool.acquire();
-  try {
-    const res = await callback(browser);
-    await pptrPool.release(browser);
-    return res;
-  } catch (err) {
-    await pptrPool.release(browser);
-    throw err;
-  }
-};
+): Promise<T> => pptrPool.use(callback);
 
 export default function app(): FastifyInstance {
   const isProd = process.env.NODE_ENV === 'production';
