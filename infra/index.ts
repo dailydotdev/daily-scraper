@@ -28,7 +28,7 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
 const limits: Input<{
   [key: string]: Input<string>;
 }> = {
-  cpu: '2',
+  cpu: '1',
   memory: '2Gi',
 };
 
@@ -64,7 +64,7 @@ createAutoscaledExposedApplication({
         initialDelaySeconds: 10,
       },
       livenessProbe: {
-        httpGet: { path: '/health', port: 'http' },
+        httpGet: { path: '/ready', port: 'http' },
         initialDelaySeconds: 10,
       },
       env: convertRecordToContainerEnvVars({ secretName: name, data: envVars }),
@@ -74,7 +74,7 @@ createAutoscaledExposedApplication({
       },
     },
   ],
-  minReplicas: 4,
+  minReplicas: 3,
   maxReplicas: 10,
   metrics: getMemoryAndCpuMetrics(60),
 });
