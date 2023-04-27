@@ -21,7 +21,7 @@ The scraper can find the icon, rss feed, name, and other relevant information fo
 
 ## Stack
 
-* Node v12.19.0 (a `.nvmrc` is presented for [nvm](https://github.com/nvm-sh/nvm) users).
+* Node v16.20.0 (a `.nvmrc` is presented for [nvm](https://github.com/nvm-sh/nvm) users).
 * NPM for managing dependencies.
 * Fastify as the web framework
 
