@@ -21,11 +21,11 @@ const {serviceAccount} = createServiceAccountAndGrantRoles(
   ],
 );
 
-const memory = 2048
+const memory = 1024
 const limits: Input<{
   [key: string]: Input<string>;
 }> = {
-  cpu: '1',
+  cpu: '0.5',
   memory: `${memory}Mi`,
 };
 
