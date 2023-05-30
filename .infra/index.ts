@@ -43,8 +43,8 @@ deployApplicationSuite({
   apps: [{
     port: 3000,
     env: [nodeOptions(memory)],
-    minReplicas: 3,
-    maxReplicas: 10,
+    minReplicas: 2,
+    maxReplicas: 5,
     limits,
     readinessProbe: {
       httpGet: {path: '/ready', port: 'http'},
