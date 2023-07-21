@@ -84,7 +84,7 @@ const scrapeMediumVoters = async (
       key.startsWith('Post:'),
     );
     const voters = postKeys
-      .map((key) => state[key].voterCount)
+      .map((key) => state[key].clapCount)
       .find((voters) => voters >= 0);
     if (voters >= 0) {
       return {
