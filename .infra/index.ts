@@ -44,13 +44,13 @@ deployApplicationSuite({
     port: 3000,
     env: [nodeOptions(memory)],
     minReplicas: 3,
-    maxReplicas: 10,
+    maxReplicas: 7,
     limits,
     readinessProbe: {
       httpGet: {path: '/ready', port: 'http'},
       initialDelaySeconds: 10,
     },
-    metric: {type: 'memory_cpu', cpu: 60},
+    metric: {type: 'memory_cpu', cpu: 80},
     createService: true,
   }],
 })
