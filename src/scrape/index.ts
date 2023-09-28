@@ -1,4 +1,5 @@
 import * as puppeteer from 'puppeteer';
+import { PuppeteerLifeCycleEvent } from 'puppeteer';
 
 type Scraper<T> = (
   page: puppeteer.Page,
@@ -9,11 +10,12 @@ export async function scrape<T>(
   url: string,
   browser: puppeteer.Browser,
   scraper: Scraper<T>,
+  waitUntil: PuppeteerLifeCycleEvent = 'load',
 ): Promise<T> {
   const page = await browser.newPage();
   try {
     const res = await page.goto(url, {
-      waitUntil: 'load',
+      waitUntil,
       timeout: 20000,
     });
     const ret = await scraper(page, res);

@@ -216,6 +216,7 @@ export default function app(): FastifyInstance {
                 data.website?.split('?')?.[0],
                 browser,
                 scrapeSource,
+                'domcontentloaded',
               );
             } catch (err) {
               data = { type: 'website', rss: [] };
