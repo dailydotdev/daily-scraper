@@ -47,7 +47,7 @@
     "fastify-static": "^4.5.0",
     "jest": "^26.6.3",
     "jest-junit": "^13.0.0",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.20",
     "pino-pretty": "^6.0.0",
     "prettier": "^2.3.2",
     "supertest": "^6.1.6",
