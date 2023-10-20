@@ -1,62 +1,40 @@
 import { Readable } from 'stream';
-import * as puppeteer from 'puppeteer';
-import * as url from 'url';
-import * as FeedParser from 'feedparser';
+import puppeteer, { Page, HTTPResponse } from 'puppeteer';
+import { RSS, RSSFeed } from './types'; 
 
-export interface RSS {
-  url: string;
-  title: string;
-}
-
-export interface RSSFeed {
-  meta: FeedParser.Meta;
-  items: FeedParser.Item[];
-}
-
-export const scrapeRssLink = async (page: puppeteer.Page): Promise<RSS[]> => {
-  let rss = await page.$$eval('link[rel="alternate"][type*="xml"]', (el) =>
-    el.map(
-      (x): RSS => ({
-        url: x.getAttribute('href'),
-        title: x.getAttribute('title'),
-      }),
-    ),
+export const scrapeRssLink = async (page: Page): Promise<RSS[]> => {
+  const rss = await page.$$eval('link[rel="alternate"][type*="xml"]', (elements) =>
+    elements.map((element) => ({
+      url: element.getAttribute('href'),
+      title: element.getAttribute('title') || 'RSS',
+    }))
   );
-  if (rss.length > 1) {
-    rss = rss.filter((x) => !!x.title);
-  } else if (rss.length > 0 && !rss[0].title) {
-    rss[0].title = 'RSS';
-  }
-  return rss.map((x) => ({ ...x, url: url.resolve(page.url(), x.url) }));
+  return rss.map((item) => ({ ...item, url: new URL(item.url, page.url()).toString() }));
 };
 
-export const readRssFeed = async (
-  page: puppeteer.Page,
-  res: puppeteer.HTTPResponse,
-): Promise<RSSFeed> => {
+export const readRssFeed = async (page: Page, res: HTTPResponse): Promise<RSSFeed> => {
   const contentType = res.headers()['content-type'];
-  if (contentType.indexOf('xml') > -1) {
+  
+  if (contentType.includes('xml')) {
     const feed = await res.text();
     const parser = new FeedParser({ normalize: true, addmeta: true });
-
-    const textStream = new Readable();
+    
+    const textStream = new Readable({ read() {} });
     textStream.push(feed, 'utf-8');
-    textStream.push(null, 'utf-8');
-
-    let rssFeed: RSSFeed;
-    const promise = new Promise<RSSFeed>((resolve, reject) => {
-      parser.on('readable', function () {
-        rssFeed = { meta: this.meta, items: [] };
-        let item: FeedParser.Item;
-        while ((item = this.read())) {
+    textStream.push(null);
+    
+    return new Promise<RSSFeed>((resolve, reject) => {
+      let rssFeed: RSSFeed = { meta: parser.meta, items: [] };
+      parser.on('readable', () => {
+        let item;
+        while ((item = parser.read())) {
           rssFeed.items.push(item);
         }
       });
       parser.on('error', reject);
       parser.on('end', () => resolve(rssFeed));
     });
-    textStream.pipe(parser);
-    return promise;
+  } else {
+    throw new Error('Invalid content type');
   }
-  throw new Error('invalid content type');
 };
