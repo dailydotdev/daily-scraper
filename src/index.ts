@@ -260,10 +260,17 @@ export default function app(): FastifyInstance {
     async (req, res) => {
       await acquireAndRelease(async (browser) => {
         const page = await browser.newPage();
-        await page.setContent(req.body.content, {
-          waitUntil: 'load',
-          timeout: 10000,
-        });
+        if (req.body.url) {
+          await page.goto(req.body.url, {
+            waitUntil: 'networkidle0',
+            timeout: 10000,
+          });
+        } else {
+          await page.setContent(req.body.content, {
+            waitUntil: 'load',
+            timeout: 10000,
+          });
+        }
 
         const element = await page.$(req.body.selector);
         const buffer = await element.screenshot({
