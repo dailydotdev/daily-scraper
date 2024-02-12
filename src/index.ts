@@ -264,6 +264,7 @@ export default function app(): FastifyInstance {
           await page.setViewport({
             width: 1280,
             height: 768,
+            deviceScaleFactor: 2,
           });
           await page.goto(req.body.url, {
             waitUntil: 'networkidle0',
