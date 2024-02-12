@@ -261,6 +261,10 @@ export default function app(): FastifyInstance {
       await acquireAndRelease(async (browser) => {
         const page = await browser.newPage();
         if (req.body.url) {
+          await page.setViewport({
+            width: 1280,
+            height: 768,
+          });
           await page.goto(req.body.url, {
             waitUntil: 'networkidle0',
             timeout: 10000,
