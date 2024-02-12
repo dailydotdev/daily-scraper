@@ -269,6 +269,10 @@ export default function app(): FastifyInstance {
             waitUntil: 'networkidle0',
             timeout: 10000,
           });
+          await page.evaluate(() => {
+            document.documentElement.style.background = 'transparent';
+            document.documentElement.style.fontFamily = "'Roboto'";
+          });
         } else {
           await page.setContent(req.body.content, {
             waitUntil: 'load',
