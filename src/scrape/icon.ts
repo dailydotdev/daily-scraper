@@ -7,16 +7,18 @@ interface Icon {
   size: number;
 }
 
+const YT_ICON_SELECTOR = '#page-header img';
+
 export const scrapeIcon = async (
   page: puppeteer.Page,
 ): Promise<string | null> => {
   const pageType = getPageType(page);
   let selected: string;
   if (pageType === 'youtube') {
-    await page.waitForSelector('#channel-header #avatar img', {
+    await page.waitForSelector(YT_ICON_SELECTOR, {
       timeout: 1000,
     });
-    [selected] = await page.$$eval('#channel-header #avatar img', (el) =>
+    [selected] = await page.$$eval(YT_ICON_SELECTOR, (el) =>
       el.map((x): string => x.getAttribute('src')),
     );
   }
