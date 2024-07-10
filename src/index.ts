@@ -5,6 +5,7 @@ import * as fastJson from 'fast-json-stringify';
 // import * as rateLimit from 'fastify-rate-limit';
 import * as puppeteer from 'puppeteer';
 import * as genericPool from 'generic-pool';
+import cors from '@fastify/cors';
 
 import './config';
 import trace from './trace';
@@ -136,6 +137,10 @@ export default function app(): FastifyInstance {
   });
 
   app.register(helmet);
+  app.register(cors, {
+    origin: isProd ? /^(?:https:\/\/)?(?:[\w-]+\.)*daily\.dev$/ : true,
+    credentials: true,
+  });
   app.register(trace, { enabled: isProd });
   app.register(auth, { secret: process.env.ACCESS_SECRET });
 
