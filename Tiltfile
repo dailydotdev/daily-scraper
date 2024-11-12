@@ -14,6 +14,7 @@ docker_build(
       trigger=['./package.json', './package-lock.json']
     )
   ],
+  # Required because Chrome is not available for arm64
   platform='linux/amd64',
 )
 
