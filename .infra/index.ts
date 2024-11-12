@@ -1,4 +1,4 @@
-import {Input} from '@pulumi/pulumi';
+import { Input } from '@pulumi/pulumi';
 import {
   config,
   createServiceAccountAndGrantRoles, deployApplicationSuite,
@@ -10,14 +10,14 @@ const imageTag = getImageTag();
 const name = 'scraper';
 const image = `gcr.io/daily-ops/daily-${name}:${imageTag}`;
 
-const {serviceAccount} = createServiceAccountAndGrantRoles(
+const { serviceAccount } = createServiceAccountAndGrantRoles(
   `${name}-sa`,
   name,
   `daily-${name}`,
   [
-    {name: 'profiler', role: 'roles/cloudprofiler.agent'},
-    {name: 'trace', role: 'roles/cloudtrace.agent'},
-    {name: 'secret', role: 'roles/secretmanager.secretAccessor'},
+    { name: 'profiler', role: 'roles/cloudprofiler.agent' },
+    { name: 'trace', role: 'roles/cloudtrace.agent' },
+    { name: 'secret', role: 'roles/secretmanager.secretAccessor' },
   ],
 );
 
@@ -47,10 +47,10 @@ deployApplicationSuite({
     maxReplicas: 7,
     limits,
     readinessProbe: {
-      httpGet: {path: '/ready', port: 'http'},
+      httpGet: { path: '/ready', port: 'http' },
       initialDelaySeconds: 10,
     },
-    metric: {type: 'memory_cpu', cpu: 80},
+    metric: { type: 'memory_cpu', cpu: 80 },
     createService: true,
   }],
 })
