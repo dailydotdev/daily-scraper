@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  gcp-gcr: circleci/gcp-gcr@0.15.3
-  gcp-cli: circleci/gcp-cli@3.1.1
+  gcp-gcr: circleci/gcp-gcr@0.16.7
+  gcp-cli: circleci/gcp-cli@3.2.2
   pulumi: pulumi/pulumi@2.1.0
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
           name: Test
           command: npm run test -- --ci --reporters=default --reporters=jest-junit
           environment:
-            - JEST_JUNIT_OUTPUT_DIR: ./test-results
+            JEST_JUNIT_OUTPUT_DIR: ./test-results
       - store_test_results:
           path: ./test-results
       - run:
@@ -37,7 +37,9 @@ jobs:
           paths:
             - build
   build_and_push_docker:
-    machine: true
+    machine:
+      image: ubuntu-2204:current
+      docker_layer_caching: true
     steps:
       - checkout
       - attach_workspace:
