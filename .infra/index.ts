@@ -2,13 +2,15 @@ import { Input } from '@pulumi/pulumi';
 import {
   config,
   createServiceAccountAndGrantRoles, deployApplicationSuite,
+  detectIsAdhocEnv,
+  getImageAndTag,
   getImageTag,
   nodeOptions,
 } from '@dailydotdev/pulumi-common';
 
-const imageTag = getImageTag();
+const isAdhocEnv = detectIsAdhocEnv();
 const name = 'scraper';
-const image = `gcr.io/daily-ops/daily-${name}:${imageTag}`;
+const { image, imageTag } = getImageAndTag(`gcr.io/daily-ops/daily-${name}`);
 
 const { serviceAccount } = createServiceAccountAndGrantRoles(
   `${name}-sa`,
@@ -19,6 +21,7 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
     { name: 'trace', role: 'roles/cloudtrace.agent' },
     { name: 'secret', role: 'roles/secretmanager.secretAccessor' },
   ],
+  isAdhocEnv
 );
 
 const memory = 1024
@@ -29,7 +32,7 @@ const limits: Input<{
   memory: `${memory}Mi`,
 };
 
-const namespace = 'daily';
+const namespace = isAdhocEnv ? 'local' : 'daily';
 
 const envVars = config.requireObject<Record<string, string>>('env');
 
@@ -53,4 +56,5 @@ deployApplicationSuite({
     metric: { type: 'memory_cpu', cpu: 80 },
     createService: true,
   }],
+  isAdhocEnv,
 })

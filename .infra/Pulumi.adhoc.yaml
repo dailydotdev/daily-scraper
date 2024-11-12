@@ -1,0 +1,4 @@
+config:
+  scraper:env:
+    accessSecret: supersecret
+    nodeEnv: development
