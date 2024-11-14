@@ -55,6 +55,7 @@ deployApplicationSuite({
     },
     metric: { type: 'memory_cpu', cpu: 80 },
     createService: true,
+    spot: { enabled: true }
   }],
   isAdhocEnv,
 })
