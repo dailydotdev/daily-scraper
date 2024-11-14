@@ -53,7 +53,8 @@ deployApplicationSuite({
       initialDelaySeconds: 10,
     },
     metric: { type: 'memory_cpu', cpu: 80 },
-    servicePorts: [{ name: 'http', port: 3000 }],
+    ports: [{ containerPort: 3000, name: 'http' }],
+    servicePorts: [{ targetPort: 3000, port: 80, name: 'http' }],
     createService: true,
     spot: { enabled: true }
   }],
