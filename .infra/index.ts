@@ -23,7 +23,8 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
   isAdhocEnv
 );
 
-const memory = 1024
+const memory = 768
+const maxMemory = 2048
 
 const namespace = isAdhocEnv ? 'local' : 'daily';
 
@@ -37,15 +38,15 @@ deployApplicationSuite({
   serviceAccount,
   secrets: envVars,
   apps: [{
-    env: [nodeOptions(memory)],
+    env: [nodeOptions(maxMemory)],
     minReplicas: 3,
     maxReplicas: 7,
     limits: {
-      memory: `${memory}Mi`,
+      memory: `${maxMemory}Mi`,
     },
     requests: {
       cpu: '128m',
-      memory: `512Mi`
+      memory: `${memory}Mi`
     },
     readinessProbe: {
       httpGet: { path: '/ready', port: 'http' },
