@@ -1,12 +1,12 @@
 version: 2.1
 orbs:
   gcp-gcr: circleci/gcp-gcr@0.16.7
-  gcp-cli: circleci/gcp-cli@3.2.2
+  gcp-cli: circleci/gcp-cli@3.3.0
   pulumi: pulumi/pulumi@2.1.0
 jobs:
   build:
     docker:
-      - image: cimg/node:20.11
+      - image: cimg/node:20.12
     steps:
       - checkout
       - restore_cache:
@@ -53,7 +53,7 @@ jobs:
           tag: $CIRCLE_SHA1
   pulumi_preview:
     docker:
-      - image: cimg/node:18.17
+      - image: cimg/node:20.12
     steps:
       - checkout
       - pulumi/login
@@ -68,7 +68,7 @@ jobs:
   pulumi_up:
     circleci_ip_ranges: true
     docker:
-      - image: cimg/node:18.17
+      - image: cimg/node:20.12
     environment:
       USE_GKE_GCLOUD_AUTH_PLUGIN: 'True'
     steps:
