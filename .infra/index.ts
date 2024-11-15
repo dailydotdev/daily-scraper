@@ -56,7 +56,7 @@ deployApplicationSuite({
     ports: [{ containerPort: 3000, name: 'http' }],
     servicePorts: [{ targetPort: 3000, port: 80, name: 'http' }],
     createService: true,
-    spot: { enabled: true }
+    spot: { enabled: true, weight: 50 }
   }],
   isAdhocEnv,
 })
