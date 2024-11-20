@@ -4,7 +4,6 @@ import {
   createServiceAccountAndGrantRoles, deployApplicationSuite,
   detectIsAdhocEnv,
   getImageAndTag,
-  getImageTag,
   nodeOptions,
 } from '@dailydotdev/pulumi-common';
 
@@ -24,13 +23,8 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
   isAdhocEnv
 );
 
-const memory = 1024
-const limits: Input<{
-  [key: string]: Input<string>;
-}> = {
-  cpu: '0.5',
-  memory: `${memory}Mi`,
-};
+const memory = 768
+const maxMemory = 2048
 
 const namespace = isAdhocEnv ? 'local' : 'daily';
 
@@ -44,17 +38,25 @@ deployApplicationSuite({
   serviceAccount,
   secrets: envVars,
   apps: [{
-    port: 3000,
-    env: [nodeOptions(memory)],
+    env: [nodeOptions(maxMemory)],
     minReplicas: 3,
     maxReplicas: 7,
-    limits,
+    limits: {
+      memory: `${maxMemory}Mi`,
+    },
+    requests: {
+      cpu: '128m',
+      memory: `${memory}Mi`
+    },
     readinessProbe: {
       httpGet: { path: '/ready', port: 'http' },
       initialDelaySeconds: 10,
     },
     metric: { type: 'memory_cpu', cpu: 80 },
+    ports: [{ containerPort: 3000, name: 'http' }],
+    servicePorts: [{ targetPort: 3000, port: 80, name: 'http' }],
     createService: true,
+    spot: { enabled: true, weight: 50 }
   }],
   isAdhocEnv,
 })
