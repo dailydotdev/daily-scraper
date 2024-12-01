@@ -52,7 +52,7 @@ deployApplicationSuite({
       httpGet: { path: '/ready', port: 'http' },
       initialDelaySeconds: 10,
     },
-    metric: { type: 'memory_cpu', cpu: 80 },
+    metric: { type: 'memory_cpu', cpu: 80, memory: 150 },
     ports: [{ containerPort: 3000, name: 'http' }],
     servicePorts: [{ targetPort: 3000, port: 80, name: 'http' }],
     createService: true,
