@@ -18,7 +18,7 @@ import {
   readRssFeed,
   RSS,
 } from './scrape';
-import { Screenshot, ScreenshotType } from './types';
+import { Pdf, PdfType, Screenshot, ScreenshotType } from './types';
 
 export const stringifyHealthCheck = fastJson({
   type: 'object',
@@ -293,6 +293,44 @@ export default function app(): FastifyInstance {
           omitBackground: true,
         });
         res.type('image/png').send(buffer);
+      });
+    },
+  );
+
+  app.post<{ Body: PdfType }>(
+    '/pdf',
+    {
+      schema: {
+        body: Pdf,
+      },
+    },
+    async (req, res) => {
+      await acquireAndRelease(async (browser) => {
+        const page = await browser.newPage();
+        if (req.body.url) {
+          await page.setViewport({
+            width: 2480,
+            height: 1395,
+            deviceScaleFactor: 2,
+          });
+          await page.goto(req.body.url, {
+            waitUntil: 'networkidle0',
+            timeout: 10000,
+          });
+        } else {
+          await page.setContent(req.body.content, {
+            waitUntil: 'load',
+            timeout: 10000,
+          });
+        }
+
+        const buffer = await page.pdf({
+          scale: 2,
+          timeout: 10000,
+          width: 2480,
+          height: 3508,
+        });
+        res.type('application/pdf').send(buffer);
       });
     },
   );
