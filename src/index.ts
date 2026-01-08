@@ -292,7 +292,7 @@ export default function app(): FastifyInstance {
           encoding: 'binary',
           omitBackground: true,
         });
-        res.type('image/png').send(buffer);
+        res.type('image/png').send(Buffer.from(buffer));
       });
     },
   );
@@ -330,7 +330,7 @@ export default function app(): FastifyInstance {
           width: 2480,
           height: 3508,
         });
-        res.type('application/pdf').send(buffer);
+        res.type('application/pdf').send(Buffer.from(buffer));
       });
     },
   );
