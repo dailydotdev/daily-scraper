@@ -40,7 +40,7 @@ deployApplicationSuite({
   apps: [{
     env: [nodeOptions(maxMemory)],
     minReplicas: 3,
-    maxReplicas: 15,
+    maxReplicas: 20,
     limits: {
       memory: `${maxMemory}Mi`,
     },
