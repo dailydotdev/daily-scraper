@@ -265,34 +265,38 @@ export default function app(): FastifyInstance {
     async (req, res) => {
       await acquireAndRelease(async (browser) => {
         const page = await browser.newPage();
-        if (req.body.url) {
-          await page.setViewport({
-            width: 1280,
-            height: 768,
-            deviceScaleFactor: 2,
-          });
-          await page.goto(req.body.url, {
-            waitUntil: 'networkidle0',
-            timeout: 10000,
-          });
-          await page.evaluate(() => {
-            document.documentElement.style.background = 'transparent';
-            document.documentElement.style.fontFamily = "'Roboto'";
-          });
-        } else {
-          await page.setContent(req.body.content, {
-            waitUntil: 'load',
-            timeout: 10000,
-          });
-        }
+        try {
+          if (req.body.url) {
+            await page.setViewport({
+              width: 1280,
+              height: 768,
+              deviceScaleFactor: 2,
+            });
+            await page.goto(req.body.url, {
+              waitUntil: 'networkidle0',
+              timeout: 10000,
+            });
+            await page.evaluate(() => {
+              document.documentElement.style.background = 'transparent';
+              document.documentElement.style.fontFamily = "'Roboto'";
+            });
+          } else {
+            await page.setContent(req.body.content, {
+              waitUntil: 'load',
+              timeout: 10000,
+            });
+          }
 
-        const element = await page.$(req.body.selector);
-        const buffer = await element.screenshot({
-          type: 'png',
-          encoding: 'binary',
-          omitBackground: true,
-        });
-        res.type('image/png').send(Buffer.from(buffer));
+          const element = await page.$(req.body.selector);
+          const buffer = await element.screenshot({
+            type: 'png',
+            encoding: 'binary',
+            omitBackground: true,
+          });
+          res.type('image/png').send(Buffer.from(buffer));
+        } finally {
+          await page.close();
+        }
       });
     },
   );
@@ -307,30 +311,34 @@ export default function app(): FastifyInstance {
     async (req, res) => {
       await acquireAndRelease(async (browser) => {
         const page = await browser.newPage();
-        if (req.body.url) {
-          await page.setViewport({
-            width: 2480,
-            height: 1395,
-            deviceScaleFactor: 2,
-          });
-          await page.goto(req.body.url, {
-            waitUntil: 'networkidle0',
-            timeout: 10000,
-          });
-        } else {
-          await page.setContent(req.body.content, {
-            waitUntil: 'load',
-            timeout: 10000,
-          });
-        }
+        try {
+          if (req.body.url) {
+            await page.setViewport({
+              width: 2480,
+              height: 1395,
+              deviceScaleFactor: 2,
+            });
+            await page.goto(req.body.url, {
+              waitUntil: 'networkidle0',
+              timeout: 10000,
+            });
+          } else {
+            await page.setContent(req.body.content, {
+              waitUntil: 'load',
+              timeout: 10000,
+            });
+          }
 
-        const buffer = await page.pdf({
-          scale: 2,
-          timeout: 10000,
-          width: 2480,
-          height: 3508,
-        });
-        res.type('application/pdf').send(Buffer.from(buffer));
+          const buffer = await page.pdf({
+            scale: 2,
+            timeout: 10000,
+            width: 2480,
+            height: 3508,
+          });
+          res.type('application/pdf').send(Buffer.from(buffer));
+        } finally {
+          await page.close();
+        }
       });
     },
   );
