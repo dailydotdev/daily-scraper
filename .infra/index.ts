@@ -45,7 +45,7 @@ deployApplicationSuite({
       memory: `${maxMemory}Mi`,
     },
     requests: {
-      cpu: '128m',
+      cpu: '144m',
       memory: `${memory}Mi`
     },
     readinessProbe: {
