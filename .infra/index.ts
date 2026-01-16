@@ -23,7 +23,7 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
   isAdhocEnv
 );
 
-const memory = 768
+const memory = 896
 const maxMemory = 2048
 
 const namespace = isAdhocEnv ? 'local' : 'daily';
