@@ -319,7 +319,7 @@ export default function app(): FastifyInstance {
               deviceScaleFactor: 2,
             });
             await page.goto(req.body.url, {
-              waitUntil: 'networkidle0',
+              waitUntil: 'networkidle2',
               timeout: 10000,
             });
           } else {
