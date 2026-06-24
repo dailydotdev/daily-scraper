@@ -23,7 +23,11 @@ const { serviceAccount } = createServiceAccountAndGrantRoles(
   isAdhocEnv
 );
 
-const memory = 896
+// Steady-state working set is ~900-1130Mi (a pod pools up to 15 Chromium
+// browsers under load), so a 896Mi request kept pods permanently >100% of
+// request and the memory HPA metric on edge. Request it at the real working set
+// so CPU becomes the primary scaling signal; limit stays 2Gi for headroom.
+const memory = 1280
 const maxMemory = 2048
 
 const namespace = isAdhocEnv ? 'local' : 'daily';
