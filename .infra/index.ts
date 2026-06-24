@@ -52,6 +52,13 @@ deployApplicationSuite({
       httpGet: { path: '/ready', port: 'http' },
       initialDelaySeconds: 10,
     },
+    // Liveness must NOT use /ready: it returns 503 when all browsers are busy,
+    // so a healthy-but-saturated pod would be killed under load. /health always
+    // reports ok and only fails if the process is actually wedged.
+    livenessProbe: {
+      httpGet: { path: '/health', port: 'http' },
+      initialDelaySeconds: 10,
+    },
     metric: { type: 'memory_cpu', cpu: 150, memory: 150 },
     ports: [{ containerPort: 3000, name: 'http' }],
     servicePorts: [{ targetPort: 3000, port: 80, name: 'http' }],
