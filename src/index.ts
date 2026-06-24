@@ -114,9 +114,38 @@ const pptrPool = genericPool.createPool(
   },
 );
 
+// Chromium's RSS grows monotonically the longer a browser process lives, even
+// when every page is closed. Pooling long-lived browsers (min: 5, never evicted
+// below min) therefore leaks memory until the pod is OOMKilled. Recycle each
+// browser after a bounded number of uses so a fresh process replaces it before
+// it bloats.
+const maxBrowserUses = parseInt(process.env.BROWSER_MAX_USES ?? '50', 10);
+const browserUses = new WeakMap<puppeteer.Browser, number>();
+
 const acquireAndRelease = async <T>(
   callback: (browser: puppeteer.Browser) => Promise<T>,
-): Promise<T> => pptrPool.use(callback);
+): Promise<T> => {
+  const browser = await pptrPool.acquire();
+  try {
+    const result = await callback(browser);
+    const uses = (browserUses.get(browser) ?? 0) + 1;
+    if (uses >= maxBrowserUses) {
+      browserUses.delete(browser);
+      // Permanently remove this browser; the pool recreates one to keep `min`.
+      await pptrPool.destroy(browser).catch(() => undefined);
+    } else {
+      browserUses.set(browser, uses);
+      await pptrPool.release(browser);
+    }
+    return result;
+  } catch (err) {
+    // On failure the browser may be in a bad state — discard it (matches the
+    // previous pool.use() behavior) so a fresh process replaces it.
+    browserUses.delete(browser);
+    await pptrPool.destroy(browser).catch(() => undefined);
+    throw err;
+  }
+};
 
 export default function app(): FastifyInstance {
   const isProd = process.env.NODE_ENV === 'production';
