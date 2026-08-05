@@ -295,20 +295,27 @@ export default function app(): FastifyInstance {
       await acquireAndRelease(async (browser) => {
         const page = await browser.newPage();
         try {
+          const {
+            width = 1280,
+            height = 768,
+            deviceScaleFactor = 2,
+            imageType = 'png',
+            quality,
+            keepFonts = false,
+          } = req.body;
+
           if (req.body.url) {
-            await page.setViewport({
-              width: 1280,
-              height: 768,
-              deviceScaleFactor: 2,
-            });
+            await page.setViewport({ width, height, deviceScaleFactor });
             await page.goto(req.body.url, {
               waitUntil: 'networkidle0',
               timeout: 10000,
             });
-            await page.evaluate(() => {
+            await page.evaluate((keep) => {
               document.documentElement.style.background = 'transparent';
-              document.documentElement.style.fontFamily = "'Roboto'";
-            });
+              if (!keep) {
+                document.documentElement.style.fontFamily = "'Roboto'";
+              }
+            }, keepFonts);
           } else {
             await page.setContent(req.body.content, {
               waitUntil: 'load',
@@ -318,11 +325,14 @@ export default function app(): FastifyInstance {
 
           const element = await page.$(req.body.selector);
           const buffer = await element.screenshot({
-            type: 'png',
+            type: imageType,
             encoding: 'binary',
-            omitBackground: true,
+            // JPEG has no alpha, and asking to omit a background it cannot
+            // represent makes Chrome render the transparent areas black.
+            omitBackground: imageType === 'png',
+            ...(imageType === 'jpeg' && { quality: quality ?? 85 }),
           });
-          res.type('image/png').send(Buffer.from(buffer));
+          res.type(`image/${imageType}`).send(Buffer.from(buffer));
         } finally {
           await page.close();
         }
