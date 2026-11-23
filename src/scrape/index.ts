@@ -30,3 +30,4 @@ export async function scrape<T>(
 export * from './icon';
 export * from './rss';
 export * from './siteName';
+export * from './description';
