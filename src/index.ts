@@ -15,6 +15,8 @@ import {
   scrapeIcon,
   scrapeRssLink,
   scrapeSiteName,
+  scrapeDescription,
+  scrapeText,
   readRssFeed,
   RSS,
 } from './scrape';
@@ -35,6 +37,8 @@ interface ScrapeSourceWebsite {
   rss: RSS[];
   logo?: string;
   name?: string;
+  description?: string;
+  text?: string;
 }
 
 interface ScrapeSourceRSS {
@@ -54,10 +58,12 @@ type ScrapeMediumVoters = { voters?: number; failed?: boolean; error?: string };
 const scrapeSource = async (
   page: puppeteer.Page,
 ): Promise<ScrapeSourceWebsite> => {
-  const [logo, rss, name] = await Promise.all([
+  const [logo, rss, name, description, text] = await Promise.all([
     scrapeIcon(page),
     scrapeRssLink(page),
     scrapeSiteName(page),
+    scrapeDescription(page),
+    scrapeText(page),
   ]);
   return {
     type: 'website',
@@ -65,6 +71,8 @@ const scrapeSource = async (
     logo,
     rss,
     name,
+    description,
+    text,
   };
 };
 
